@@ -7,16 +7,16 @@ const RegisterModel = () => {
       <div className="fixed inset-0 bg-[#242424dd] bg-opacity-50 flex items-center justify-center z-50">
         
         {/* Modal container */}
-        <div className="bg-white w-[70%] max-w-md h-[600px] rounded-2xl overflow-hidden shadow-lg border border-white">
+        <div className="bg-white w-[70%] max-w-md h-[550px] rounded-2xl overflow-hidden shadow-lg border border-white">
           
           {/* Header section with logo and title */}
-          <div className="popup-header w-full h-[20%] flex items-center justify-center gap-2">
+          <div className="popup-header w-full h-[16%] flex items-center justify-center gap-2">
             <img src="/logo.png" alt="Logo" className="h-10" />
             <h1 className="font-bold text-2xl">Build Box</h1>
           </div>
 
           {/* Login form container */}
-          <div className="login-input bg-[#1F1F1F] w-full h-[80%] text-center p-4 rounded-t-2xl">
+          <div className="login-input bg-[#1F1F1F] w-full h-[84%] text-center p-4 rounded-t-2xl">
             <h1 className="text-[#848484] text-2xl font-semibold mb-6">Sign up</h1>
 
             {/* Form fields */}
