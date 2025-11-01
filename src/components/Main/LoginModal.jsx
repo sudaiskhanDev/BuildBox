@@ -17,7 +17,7 @@ const LoginModal = () => {
 
           {/* Login form container */}
           <div className="login-input bg-[#1F1F1F] w-full h-[80%] text-center p-4 rounded-t-2xl">
-            <h1 className="text-[#848484] text-3xl font-semibold mb-6">Login</h1>
+            <h1 className="text-[#848484] text-2xl font-semibold mb-6">Login</h1>
 
             {/* Form fields */}
             <div className="login w-[90%] flex flex-col justify-center items-center max-w-sm mx-auto text-white">
