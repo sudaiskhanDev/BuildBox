@@ -6,7 +6,7 @@ const NavBar = () => {
     <div className="main-nav relative flex justify-between w-[80%] px-4 m-auto items-center">
 
       <div className="logo">
-                  <img src="/logo.png" alt="Logo" className="h-5 md:h-10 w-auto" />
+                  <img src="/logo.png" alt="Logo" className=" w-auto" />
 
       </div>
         <div className="nav-data hidden w-[600px] text-white md:flex bg-black h-12 px-10 rounded-b-full justify-center items-center">
