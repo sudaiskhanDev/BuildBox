@@ -9,7 +9,7 @@ const NavBar = () => {
                   <img src="/logo.png" alt="Logo" className=" w-auto" />
 
       </div>
-        <div className="nav-data hidden w-[600px] text-white md:flex bg-black h-12 px-10 rounded-b-full justify-center items-center">
+        <div className="nav-data w-[600px] text-white md:flex bg-black h-12 px-10 rounded-b-full justify-center items-center">
           <ul className="flex space-x-8 text-sm font-medium">
             <li><a href="#" className="hover:text-gray-400 transition">Home</a></li>
             <li><a href="#" className="hover:text-gray-400 transition">Tools</a></li>
