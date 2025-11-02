@@ -110,7 +110,7 @@ const NavBar = () => {
       {/* Mobile Sidebar with Animation */}
       <div
         ref={menuRef}
-        className={`fixed top-0 right-0 w-64 h-full bg-black text-white shadow-2xl z-50 p-6 flex flex-col gap-6 transform transition-transform duration-500 ease-in-out
+        className={`fixed top-0 right-0 w-64 h-full bg-black rounded-l-4xl text-white shadow-2xl z-50 p-6 flex flex-col gap-6 transform transition-transform duration-500 ease-in-out
           ${isMobileMenuOpen ? "translate-x-0" : "translate-x-full"}`}
       >
         <ul className="flex flex-col gap-4 text-lg font-medium">
