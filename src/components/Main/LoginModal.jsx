@@ -1,6 +1,13 @@
 import React from 'react';
 
-const LoginModal = () => {
+const LoginModal = ({isOpen, onClose, onLogin}) => {
+
+
+
+
+  if(!isOpen)
+    return null;
+
   return (
     <>
       {/* Overlay background to dim the screen */}
