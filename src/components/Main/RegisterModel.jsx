@@ -1,10 +1,23 @@
 import React from 'react'
 
-const RegisterModel = () => {
+const RegisterModel = ( {isOpen, onClose,onRegister}) => {
+
+
+
+  if(!isOpen)
+    return null;
+
+   // ✅ Background click se modal close
+    const handleBackgroundClick = (e) => {
+    if (e.target === e.currentTarget) {
+      onClose();
+    }
+  };
   return (
       <>
       {/* Overlay background to dim the screen */}
-      <div className="fixed inset-0 bg-[#242424dd] bg-opacity-50 flex items-center justify-center z-50">
+      <div className="fixed inset-0 bg-[#242424dd] bg-opacity-50 flex items-center justify-center z-50"
+      onClick={handleBackgroundClick}>
         
         {/* Modal container */}
         <div className="bg-white w-[70%] max-w-md h-[550px] rounded-2xl overflow-hidden shadow-lg border border-white">

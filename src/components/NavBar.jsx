@@ -1,15 +1,19 @@
 "use client";
 import React,{useState} from 'react'
 import LoginModal from './Main/LoginModal';
+import RegisterModel from './Main/RegisterModel';
 
 const NavBar = () => {
 
     const [isLoginOpen, setIsLoginOpen] = useState(false);
-
+    const [isRegisterOpen, setIsRegisterOpen] = useState(false)
 
     const openLoginModel = ()=> setIsLoginOpen(true)
     const closeLoginModel = ()=> setIsLoginOpen(false)
 
+    //RegisterModal
+    const openRegisterModel = ()=> setIsRegisterOpen(true)
+    const closeRegisterModel = ()=> setIsRegisterOpen(false)
 
 
   return (
@@ -34,14 +38,16 @@ const NavBar = () => {
 >
   Login
 </button>
+{/* //RegisterModel */}
 <button
   className="relative flex justify-center items-center py-2 px-8 text-white text-base font-bold nded-full overflow-hidden bg-black rounded-full transition-all duration-400 ease-in-out shadow-md hover:scale-105 hover:text-black hover:shadow-lg active:scale-90 before:absolute before:top-0 before:-left-full before:w-full before:h-full before:bg-gradient-to-r before:from-white before:to-white before:transition-all before:duration-500 before:ease-in-out before:z-[-1] before:rounded-full hover:before:left-0"
->
+  onClick={openRegisterModel}>
   Sign up
 </button>
 
       
       </div>
+
       {/* // 🔹 Step 5: Modal render karna (conditionally) */}
 
       {
@@ -55,6 +61,19 @@ const NavBar = () => {
           />
         )
       }
+      
+      {/* Resigter Modal Render KErna */}
+
+      {isRegisterOpen &&(
+        <RegisterModel
+          isOpen={isRegisterOpen}
+          onClose={closeRegisterModel}
+          onRegister={()=>{
+            setIsRegisterOpen(false);
+          }}
+          />
+       ) }
+      
     </div>
     </>
   )
