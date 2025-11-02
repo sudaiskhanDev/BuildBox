@@ -1,8 +1,12 @@
-import React from 'react'
-
+import React, { useState } from 'react'
+import axios from 'axios';
 const RegisterModel = ( {isOpen, onClose,onRegister}) => {
 
-
+  const [name ,setName]= useState("");
+  const [email, setEmail] = useState("");
+  const[ password ,setPassword ] = useState("");
+  const [message , setMessage] = useState("");
+  const [ loader, setLoader] = useState(false);
 
   if(!isOpen)
     return null;
@@ -13,6 +17,49 @@ const RegisterModel = ( {isOpen, onClose,onRegister}) => {
       onClose();
     }
   };
+  
+  //Register Handler using Axios
+  const handleRegister = async()=>{
+    if(!name || !email|| !password){
+      setMessage("Please fill all the fields");
+      return;
+    }
+
+    try {
+      setLoader(true);
+      setMessage('')
+
+      const response = await axios.post(
+        "/api/auth?type=register",
+        {
+          name,
+          email,
+          password
+        },
+        {
+          headers:{
+            "Content-Type":"application/json"
+          },
+        }
+       );
+
+       setMessage(response.data.message || "Register Successful")
+
+       if(onRegister) onRegister(response.data.user);
+       setTimeout(() => {
+        onClose();
+       }, 1500);
+
+    } catch (error) {
+      console.error(error);
+      setMessage(error.response?.data?.message || "Registration failed!");
+    } finally {
+      setLoader(false);
+    }
+
+  }
+
+
   return (
       <>
       {/* Overlay background to dim the screen */}
@@ -40,6 +87,8 @@ const RegisterModel = ( {isOpen, onClose,onRegister}) => {
               <input
                 type="text"
                 id="email"
+                value={name}
+                onChange={(e)=> setName(e.target.value)}
                 className="bg-white w-[70%] px-4 py-2 rounded border text-black border-gray-300 focus:outline-none mb-4"
               />
 
@@ -48,6 +97,8 @@ const RegisterModel = ( {isOpen, onClose,onRegister}) => {
               <input
                 type="text"
                 id="email"
+                value={email}
+                onChange={(e)=> setEmail(e.target.value)}
                 className="bg-white w-[70%] px-4 py-2 rounded border text-black border-gray-300 focus:outline-none mb-4"
               />
 
@@ -56,13 +107,27 @@ const RegisterModel = ( {isOpen, onClose,onRegister}) => {
               <input
                 type="password"
                 id="password"
+                value={password}
+                onChange={(e)=> setPassword(e.target.value)}
                 className="bg-white w-[70%] px-4 py-2 rounded border text-black border-gray-300 focus:outline-none mb-6"
               />
 
               {/* Login button */}
-              <button className="w-[40%] bg-[#0064E1] text-white py-2 rounded hover:bg-[#00469b] transition">
-                Login
+              <button className="w-[40%] bg-[#0064E1] text-white py-2 rounded hover:bg-[#00469b] transition"
+              onClick={handleRegister}
+              disabled={loader}
+              >
+                {loader? (
+                  <>
+                  <span className="loader border-2 border-white border-t-transparent rounded-full w-4 h-4 animate-spin"></span>
+                  Registering...
+                  </>
+                ):(
+                  "Register"
+                
+                )}
               </button>
+              <p>{message}</p>
             </div>
 
             {/* Footer section with Google login */}
@@ -71,6 +136,7 @@ const RegisterModel = ( {isOpen, onClose,onRegister}) => {
                 <img src="/googlelogo.png" alt="Google" className="w-6 h-6" />
                 <span className="text-sm font-medium text-gray-700">Continue with Google</span>
               </button>
+              
             </div>
           </div>
         </div>

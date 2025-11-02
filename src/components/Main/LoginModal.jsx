@@ -1,12 +1,49 @@
-import React from 'react';
+import React, { useState } from 'react';
+import axios from 'axios';
+import { set } from 'mongoose';
+
+
 
 const LoginModal = ({isOpen, onClose, onLogin}) => {
 
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [message , setMessage] = useState("");
+    const [ loader, setLoader] = useState(false);
+
+    //Login Handler using Axios
+    const handleLogin = async () =>{
+      try {
+        setLoader(true);
+        setMessage('')
+
+        const res = await axios.post("/api/auth?type=login",{
+          email,
+          password
+        });
+
+        //Success
+        localStorage.setItem('token', res.data.token);
+        setMessage("Login Successful")
+        onLogin && onLogin(res.data.user);
+        setLoader(false);
+        onClose();
 
 
-
-  if(!isOpen)
-    return null;
+      } catch (error) {
+        if(error.res){
+          setMessage(error.res.data.message || "Login Failed");
+          } 
+          // else{
+          //   setMesssage("Network Error, Please try again later");
+          // }
+        }
+          finally{
+            setLoader(false);
+          }
+      }
+    
+    
 
    // ✅ Background click se modal close
   const handleBackgroundClick = (e) => {
@@ -14,6 +51,9 @@ const LoginModal = ({isOpen, onClose, onLogin}) => {
       onClose();
     }
   };
+    if(!isOpen)
+    return null;
+
   return (
     <>
       {/* Overlay background to dim the screen */}
@@ -39,23 +79,42 @@ const LoginModal = ({isOpen, onClose, onLogin}) => {
               {/* Email input */}
               <label htmlFor="email" className="block text-sm font-medium mb-1">Email</label>
               <input
+                placeholder='Enter Email'
                 type="text"
                 id="email"
                 className="bg-white w-[70%] px-4 py-2 rounded border text-black border-gray-300 focus:outline-none mb-4"
+                value={email}
+                onChange={(e)=> setEmail(e.target.value)}
               />
 
               {/* Password input */}
               <label htmlFor="password" className="block text-sm font-medium mb-1">Password</label>
               <input
+              placeholder='Enter Password'
                 type="password"
                 id="password"
                 className="bg-white w-[70%] px-4 py-2 rounded border text-black border-gray-300 focus:outline-none mb-6"
+                value={password}
+                onChange={(e)=> setPassword(e.target.value)}
               />
 
               {/* Login button */}
-              <button className="w-[40%] bg-[#0064E1] text-white py-2 rounded hover:bg-[#00469b] transition">
-                Login
+              <button className="w-[40%] bg-[#0064E1] text-white py-2 rounded hover:bg-[#00469b] transition"
+              onClick={handleLogin}
+              disabled={loader}
+              >
+                {loader ?(
+                  
+                  <>
+                   <span className="loader border-2 border-white border-t-transparent rounded-full w-4 h-4 animate-spin"></span>
+                    Logging in...
+                  </>
+                ): (
+                  "Login"
+                )}
+                
               </button>
+              <p>{message}</p>
             </div>
 
             {/* Footer section with Google login */}
