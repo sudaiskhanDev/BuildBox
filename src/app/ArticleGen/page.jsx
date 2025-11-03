@@ -4,7 +4,7 @@ const page = () => {
   return ( 
     <>
     <div className='bg-[#000000] h-screen flex justify-center items-center'>
-        <div className="main-input-output w-[90%] md:w-[80%] max-w-4xl h-[800px] mx-auto mt-12 mb-8 rounded-2xl shadow-lg overflow-hidden flex flex-col border bg-[#212121] border-gray-900">
+        <div className="main-input-output w-[90%] md:w-[80%] max-w-4xl h-[790px] mx-auto mt-12 mb-8 rounded-2xl shadow-lg overflow-hidden flex flex-col border bg-[#212121] border-gray-900">
         {/* Output Section */}
         <div className="output-section flex-grow p-6 overflow-y-auto">
             <p className="text-white leading-relaxed">
