@@ -60,7 +60,7 @@ const Page = () => {
                     <h3 className="text-2xl font-semibold text-blue-200 mb-2">{children}</h3>
                   ),
                   p: ({ children }) => (
-                    <p className="text-gray-200 leading-relaxed text-xl mb-4">{children}</p>
+                    <p className="text-gray-200 leading-relaxed text-x mb-4">{children}</p>
                   ),
                   li: ({ children }) => (
                     <li className="text-gray-300 mb-2 ml-4 list-disc">{children}</li>
