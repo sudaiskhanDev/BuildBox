@@ -14,7 +14,7 @@ const page = () => {
 
         {/* Input Section */}
         <div className="input-section w-full h-[150px]  flex justify-center items-center p-4">
-            <div className="input-text-btn w-full sm:w-[80%] md:w-[60%] h-[60px]  rounded-full shadow-md flex items-center px-2 bg-gray-500 ">
+            <div className="input-text-btn w-full sm:w-[80%] md:w-[60%] h-[60px]  rounded-full shadow-md flex items-center px-2 bg-[#3d3d3d] ">
                 <div className="text-input flex-grow h-[40px] overflow-hidden">
                     <input 
                         type="text"
