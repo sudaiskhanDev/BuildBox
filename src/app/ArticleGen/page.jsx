@@ -1,7 +1,7 @@
 "use client"
 import React, { useState } from 'react'
-
 import axios from 'axios'
+import ReactMarkdown from 'react-markdown'
 
 
 const Page = () => {
@@ -44,11 +44,33 @@ const Page = () => {
         <div className="output-section flex-grow p-6 overflow-y-auto">
             {loading ? (
                 <p className="text-blue-400 animate-pulse text-center mt-10">Generating your article...</p>
-            ) : error? (
+            ) : error ? (
                 <p className="text-red-500 text-center mt-10">{error}</p>
-            ) : output(
-                    <p>{output}</p>
-            )}
+            ) : output ? ( 
+                 <div className="prose prose-invert max-w-none text-white">
+  <ReactMarkdown
+  components={{
+                  h1: ({ children }) => (
+                    <h1 className="text-4xl font-bold text-blue-700 mb-4">{children}</h1>
+                  ),
+                  h2: ({ children }) => (
+                    <h2 className="text-3xl font-semibold text-blue-300 mb-3">{children}</h2>
+                  ),
+                  h3: ({ children }) => (
+                    <h3 className="text-2xl font-semibold text-blue-200 mb-2">{children}</h3>
+                  ),
+                  p: ({ children }) => (
+                    <p className="text-gray-200 leading-relaxed text-xl mb-4">{children}</p>
+                  ),
+                  li: ({ children }) => (
+                    <li className="text-gray-300 mb-2 ml-4 list-disc">{children}</li>
+                  ),
+                }}>{output}</ReactMarkdown>
+</div>
+            ):(
+  <p className="text-gray-400 text-center mt-10">No output yet.</p>
+)
+        }
         </div>
 
         {/* Input Section */}
