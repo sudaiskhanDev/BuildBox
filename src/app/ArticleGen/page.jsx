@@ -2,13 +2,13 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 import ReactMarkdown from 'react-markdown'
-
+import Loader from '@/components/Main/Loader.jsx'
 
 const Page = () => {
 
     const [input , setInput] = useState("")
     const [output , setOutput] = useState("")
-    const[loading, setLoading] = useState("")
+    const[loading, setLoading] = useState(true)
     const[error, setError] =useState('')
 
     const handleGenerate = async () =>{
@@ -41,9 +41,11 @@ const Page = () => {
     <div className='bg-[#000000] h-screen flex justify-center items-center'>
         <div className="main-input-output w-[90%] md:w-[80%] max-w-4xl h-[790px] mx-auto mt-12 mb-8 rounded-2xl shadow-lg overflow-hidden flex flex-col border bg-[#212121] border-gray-900">
         {/* Output Section */}
-        <div className="output-section flex-grow p-6 overflow-y-auto">
+        <div className="output-section flex-grow p-6 overflow-y-auto m-auto">
             {loading ? (
-                <p className="text-blue-400 animate-pulse text-center mt-10">Generating your article...</p>
+                <div className='flex justify-center items-center align-middle'>
+                    <Loader />
+                </div>
             ) : error ? (
                 <p className="text-red-500 text-center mt-10">{error}</p>
             ) : output ? ( 
