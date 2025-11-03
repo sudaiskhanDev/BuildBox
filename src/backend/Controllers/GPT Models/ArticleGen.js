@@ -10,7 +10,7 @@ export const generateArticle = async (req) =>{
             messages:[
                 {
                     role: "system",
-                    content:"You are an expert blog strategist and SEO content writer. Your task is to write a compelling blog post introduction for the topic: 'Top 5 Digital Marketing Trends in 2025'. The introduction should be optimized for SEO, include relevant keywords, and hook the reader with a clear value proposition. Use a professional yet engaging tone suitable for marketing professionals and business owners."
+                    content:"You are an expert blog strategist and SEO content writer. Your task is to write a compelling blog post introduction for the topic:\${text}\.The introduction should be optimized for SEO, include relevant keywords, and hook the reader with a clear value proposition. Use a professional yet engaging tone suitable for marketing professionals and business owners."
                 },
                 {
                     role: "user",
