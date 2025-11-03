@@ -8,7 +8,7 @@ const Page = () => {
 
     const [input , setInput] = useState("")
     const [output , setOutput] = useState("")
-    const[loading, setLoading] = useState(true)
+    const[loading, setLoading] = useState(false)
     const[error, setError] =useState('')
 
     const handleGenerate = async () =>{
