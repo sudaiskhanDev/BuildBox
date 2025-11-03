@@ -7,18 +7,9 @@ const ToolsSection = () => {
         {
             title:"Tags Generator",
             desc:"ABCD",
-            link:""
+            link:"ArticleGen"
         },
-        {
-            title:"Tags Generator",
-            desc:"ABCD",
-            link:""
-        },
-        {
-            title:"Tags Generator",
-            desc:"ABCD",
-            link:""
-        },
+       
     ]
 
   return (

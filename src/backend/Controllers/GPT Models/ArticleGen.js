@@ -6,15 +6,15 @@ export const generateArticle = async (req) =>{
         const { text } = await req.json();
 
         const response = await openai.chat.completions.create({
-            model: "gpt-3.5-turbo",
+            model: "gpt-4o-mini",
             messages:[
                 {
                     role: "system",
-                    content:"You are an expert blog strategist and SEO content writer."
+                    content:"You are an expert blog strategist and SEO content writer. Your task is to write a compelling blog post introduction for the topic: 'Top 5 Digital Marketing Trends in 2025'. The introduction should be optimized for SEO, include relevant keywords, and hook the reader with a clear value proposition. Use a professional yet engaging tone suitable for marketing professionals and business owners."
                 },
                 {
                     role: "user",
-                    content:  `Generate a 100-word SEO-friendly article about: "${text}"`,
+                    content:"Generate a 1000-word SEO-friendly article about: \"${text}\". You are an expert SEO content writer. The article should be informative, engaging, and naturally include relevant keywords related to the topic. Avoid keyword stuffing and ensure smooth readability. Use active voice, short paragraphs, and a professional tone suitable for blogs or product pages."
                 }
             ]
         })
