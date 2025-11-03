@@ -10,11 +10,11 @@ export const generateArticle = async (req) =>{
             messages:[
                 {
                     role: "system",
-                    content:"You are an expert blog strategist and SEO content writer. Your task is to write a compelling blog post introduction for the topic:\${text}\.The introduction should be optimized for SEO, include relevant keywords, and hook the reader with a clear value proposition. Use a professional yet engaging tone suitable for marketing professionals and business owners."
+                    content:"You are an expert blog strategist and SEO content writer. Your task is to write a compelling blog post introduction .The introduction should be optimized for SEO, include relevant keywords, and hook the reader with a clear value proposition. Use a professional yet engaging tone suitable for marketing professionals and business owners, use easy and proffetional language and wording."
                 },
                 {
                     role: "user",
-                    content:"Generate a 1000-word SEO-friendly article about: \"${text}\". You are an expert SEO content writer. The article should be informative, engaging, and naturally include relevant keywords related to the topic. Avoid keyword stuffing and ensure smooth readability. Use active voice, short paragraphs, and a professional tone suitable for blogs or product pages."
+                    content:`Generate a 1000-word SEO-friendly article about: \"${text}\". You are an expert SEO content writer. The article should be informative, engaging, and naturally include relevant keywords related to the topic. Avoid keyword stuffing and ensure smooth readability. Use active voice, short paragraphs, and a professional tone suitable for blogs or product pages.`
                 }
             ]
         })
