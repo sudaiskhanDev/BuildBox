@@ -13,8 +13,8 @@ const page = () => {
                     <input type="text"
                     className='bg-white w-full h-full outline-none' />
                 </div>
-                <div className="gen-btn">
-                    
+                <div className="generate-btn">
+
                 </div>
             </div>
 
