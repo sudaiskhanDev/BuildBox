@@ -78,13 +78,13 @@ const Page = () => {
               <ReactMarkdown
                 components={{
                   h1: ({ children }) => (
-                    <h1 className="text-4xl font-bold text-blue-500 mb-4">{children}</h1>
+                    <h1 className="text-4xl font-bold text-blue-600 mb-4">{children}</h1>
                   ),
                   h2: ({ children }) => (
-                    <h2 className="text-3xl font-semibold text-blue-300 mb-3">{children}</h2>
+                    <h2 className="text-3xl font-semibold text-blue-500 mb-3">{children}</h2>
                   ),
                   h3: ({ children }) => (
-                    <h3 className="text-2xl font-semibold text-blue-200 mb-2">{children}</h3>
+                    <h3 className="text-2xl font-semibold text-blue-400 mb-2">{children}</h3>
                   ),
                   p: ({ children }) => (
                     <p className="text-gray-200 leading-relaxed text-x mb-4">{children}</p>
