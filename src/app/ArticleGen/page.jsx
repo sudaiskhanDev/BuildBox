@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import ReactMarkdown from "react-markdown";
 import Loader from "@/components/Main/Loader.jsx";
@@ -8,27 +8,33 @@ import GenLoader from "@/components/Main/GenLoader";
 const Page = () => {
   const [input, setInput] = useState("");
   const [output, setOutput] = useState("");
-  const [displayedText, setDisplayedText] = useState(""); // 👈 typing effect ke liye
+  const [displayedText, setDisplayedText] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  // 🧩 Typing animation useEffect
+  const outputRef = useRef(null);
+
+  // 🔹 Typing effect
   useEffect(() => {
     if (!output) return;
-
     let index = 0;
-    setDisplayedText(""); // reset
+    setDisplayedText("");
     const interval = setInterval(() => {
       setDisplayedText((prev) => prev + output[index]);
       index++;
-
       if (index >= output.length) clearInterval(interval);
-    }, 1); // 👈 speed (ms) — 10 = fast typing, 50 = slow typing
-
+    }, 1);
     return () => clearInterval(interval);
   }, [output]);
 
-  // 🧠 Generate button handler
+  // 🔹 Auto-scroll when displayedText updates
+  useEffect(() => {
+    if (outputRef.current) {
+      outputRef.current.scrollTop = outputRef.current.scrollHeight;
+    }
+  }, [displayedText]);
+
+  // 🔹 Generate button
   const handleGenerate = async () => {
     if (!input.trim()) {
       setError("Please enter a topic first");
@@ -52,19 +58,29 @@ const Page = () => {
   };
 
   return (
-    <div className="bg-black min-h-screen flex justify-center items-center py-6 px-4">
-      <div className="main-input-output w-full sm:w-[90%] md:w-[85%] lg:w-[75%] max-w-6xl min-h-[600px] bg-[#212121] border border-gray-800 rounded-2xl shadow-2xl flex flex-col overflow-hidden">
-        
+    <div className="bg-gradient-to-b from-[#0a0a0a] to-[#1a1a1a] min-h-screen flex justify-center items-center py-10 px-4">
+      <div
+        className="main-input-output relative w-full sm:w-[90%] md:w-[85%] lg:w-[75%] max-w-6xl 
+        bg-[#111111]/90 border border-[#2b2b2b] rounded-3xl shadow-[0_0_25px_rgba(0,0,0,0.8)] 
+        backdrop-blur-md flex flex-col overflow-hidden transition-all duration-300 
+        hover:shadow-[0_0_35px_rgba(59,130,246,0.2)]"
+      >
         {/* Header */}
-        <div className="header flex flex-col items-center justify-center w-full py-4 px-2 border-b border-gray-700">
-          <h1 className="text-white text-2xl sm:text-3xl md:text-4xl font-bold tracking-wide">
+        <div className="header flex flex-col items-center justify-center w-full py-6 px-3 border-b border-[#2f2f2f] bg-[#141414]/80">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-wide bg-gradient-to-r from-blue-500 to-cyan-600 bg-clip-text text-transparent drop-shadow-[0_0_8px_rgba(59,130,246,0.6)]">
             Build Box
           </h1>
-          <div className="w-[90%] border-b border-gray-600 mt-2"></div>
+          <p className="text-gray-400 text-sm sm:text-base mt-2">
+            AI-powered content builder
+          </p>
         </div>
 
-        {/* Output */}
-        <div className="output-section flex-grow px-4 sm:px-6 py-4 overflow-y-auto">
+        {/* Output Section */}
+        <div
+          ref={outputRef}
+          className="output-section flex-grow px-6 sm:px-10 py-6 overflow-y-auto scroll-smooth"
+          style={{ maxHeight: "70vh", paddingBottom: "100px" }}
+        >
           {loading ? (
             <div className="flex justify-center items-center h-60">
               <Loader />
@@ -78,19 +94,29 @@ const Page = () => {
               <ReactMarkdown
                 components={{
                   h1: ({ children }) => (
-                    <h1 className="text-4xl font-bold text-blue-600 mb-4">{children}</h1>
+                    <h1 className="text-4xl font-bold text-blue-500 mb-4">
+                      {children}
+                    </h1>
                   ),
                   h2: ({ children }) => (
-                    <h2 className="text-3xl font-semibold text-blue-500 mb-3">{children}</h2>
+                    <h2 className="text-3xl font-semibold text-cyan-400 mb-3">
+                      {children}
+                    </h2>
                   ),
                   h3: ({ children }) => (
-                    <h3 className="text-2xl font-semibold text-blue-400 mb-2">{children}</h3>
+                    <h3 className="text-2xl font-semibold text-blue-300 mb-2">
+                      {children}
+                    </h3>
                   ),
                   p: ({ children }) => (
-                    <p className="text-gray-200 leading-relaxed text-x mb-4">{children}</p>
+                    <p className="text-gray-300 leading-relaxed text-base mb-4">
+                      {children}
+                    </p>
                   ),
                   li: ({ children }) => (
-                    <li className="text-gray-300 mb-2 ml-4 list-disc">{children}</li>
+                    <li className="text-gray-400 mb-2 ml-4 list-disc">
+                      {children}
+                    </li>
                   ),
                 }}
               >
@@ -98,33 +124,36 @@ const Page = () => {
               </ReactMarkdown>
             </div>
           ) : (
-            <p className="text-gray-500 text-center mt-10 text-sm sm:text-base">
+            <p className="text-gray-600 text-center mt-10 text-sm sm:text-base italic">
               No output yet. Enter a topic below to get started.
             </p>
           )}
         </div>
 
-        {/* Input */}
-        <div className="input-section w-full py-4 px-3 sm:px-6 bg-[#1a1a1a] border-t border-gray-700">
-          <div className="input-text-btn flex flex-col sm:flex-row items-center gap-3 sm:gap-4 w-full">
+        {/* Fixed Input Section */}
+        <div
+          className="input-section fixed bottom-6 left-1/2 -translate-x-1/2 
+          w-[90%] sm:w-[85%] md:w-[75%] lg:w-[70%] bg-[#0f0f0f]/95 border border-[#2b2b2b] 
+          rounded-full px-4 sm:px-6 py-3 shadow-[0_0_20px_rgba(0,0,0,0.6)] backdrop-blur-md"
+        >
+          <div className="flex items-center gap-3 sm:gap-4">
             <input
               value={input}
               onChange={(e) => setInput(e.target.value)}
               type="text"
               placeholder="Enter your topic here..."
-              className="flex-grow w-full sm:w-auto bg-[#2e2e2e] text-white placeholder-gray-400 px-4 py-3 rounded-full outline-none border border-gray-700 focus:border-blue-500 transition-all duration-300 text-sm sm:text-base"
+              className="flex-grow bg-[#1b1b1b] text-gray-100 placeholder-gray-500 px-5 py-3 rounded-full outline-none border border-[#333] focus:border-blue-500 focus:ring-2 focus:ring-blue-600/30 transition-all duration-300 text-sm sm:text-base shadow-inner"
             />
 
             <button
               onClick={handleGenerate}
               disabled={loading}
-              className={`w-full sm:w-auto flex justify-center items-center gap-2 
-                font-semibold px-6 py-3 rounded-full shadow-md text-sm sm:text-base
-                transition-all duration-300 ease-in-out
+              className={`flex justify-center items-center gap-2 font-semibold 
+                px-7 py-3 rounded-full text-sm sm:text-base transition-all duration-300 ease-in-out
                 ${
                   loading
-                    ? "bg-blue-500 cursor-not-allowed opacity-80"
-                    : "bg-blue-600 hover:bg-blue-700 active:scale-95 text-white shadow-blue-900/30"
+                    ? "bg-blue-500/60 cursor-not-allowed"
+                    : "bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 active:scale-95 text-white shadow-[0_0_15px_rgba(59,130,246,0.5)]"
                 }`}
             >
               {loading ? (
