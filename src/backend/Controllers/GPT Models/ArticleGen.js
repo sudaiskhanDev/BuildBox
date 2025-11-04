@@ -14,7 +14,7 @@ export const generateArticle = async (req) =>{
                 },
                 {
                     role: "user",
-                    content:`Generate a 100-word SEO-friendly article about: \"${text}\". You are an expert SEO content writer. The article should be informative, engaging, and naturally include relevant keywords related to the topic. Avoid keyword stuffing and ensure smooth readability. Use active voice, short paragraphs, and a professional tone suitable for blogs or product pages.`
+                    content:`Generate a 1000-word SEO-friendly article about: \"${text}\". You are an expert SEO content writer. The article should be informative, engaging, and naturally include relevant keywords related to the topic. Avoid keyword stuffing and ensure smooth readability. Use active voice, short paragraphs, and a professional tone suitable for blogs or product pages.`
                 }
             ]
         })
