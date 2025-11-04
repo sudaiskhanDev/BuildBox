@@ -1,4 +1,5 @@
 import React from "react";
+// import { Sparkles, FileText } from "lucide-react"; // optional icons (lucide-react package)
 
 const ToolsSection = () => {
   // Array of tool objects
@@ -7,81 +8,59 @@ const ToolsSection = () => {
       title: "Article Generator",
       desc: "Generate articles instantly on any topic with clear, engaging content.",
       link: "ArticleGen",
+      // icon: <FileText className="w-10 h-10 text-blue-400" />, // icon added
     },
     {
-      title: "Article Generator",
-      desc: "Generate articles instantly on any topic with clear, engaging content.",
-      link: "ArticleGen",
+      title: "Blog Writer",
+      desc: "Create SEO-optimized blog posts in seconds using AI-powered content generation.",
+      link: "BlogWriter",
+      // icon: <Sparkles className="w-10 h-10 text-cyan-400" />,
     },
   ];
 
   return (
-  <>
-  {/* Title */}
-  <div className="title px-3 sm:px-4 md:px-6">
-    <h1 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-center text-gray-800 mt-8 sm:mt-10 md:mt-12 mb-5 sm:mb-6 md:mb-8">
-      Tools Section
-    </h1>
-  </div>
-
-  {/* Main Tools Container */}
-  <div
-    className="main-tools-section 
-      bg-gray-500 
-      w-[95%] sm:w-[90%] md:w-[85%] lg:w-[80%] 
-      max-w-6xl 
-      h-auto m-auto rounded-2xl 
-      p-3 sm:p-5 md:p-6 lg:p-8 
-      flex flex-wrap justify-center 
-      gap-3 sm:gap-4 md:gap-6 lg:gap-8"
-  >
-    {tools.map((tool, index) => (
-      <div
-        key={index}
-        className="flex flex-col bg-black rounded-3xl 
-        w-full xs:w-[90%] sm:w-[260px] md:w-[280px] lg:w-[300px] xl:w-[320px]
-        h-auto text-white shadow-xl 
-        hover:scale-105 hover:shadow-2xl 
-        transition-all duration-300 ease-in-out"
-      >
-        {/* Top Section */}
-        <div className="px-4 sm:px-6 md:px-8 py-6 sm:py-8">
-          <div className="grid items-center justify-center w-full grid-cols-1 text-left">
-            <div>
-              <h2 className="text-base sm:text-lg md:text-xl lg:text-2xl font-semibold tracking-tight text-white">
-                {tool.title}
-              </h2>
-              <p className="mt-2 text-xs sm:text-sm md:text-base text-gray-300 leading-relaxed line-clamp-3">
-                {tool.desc}
-              </p>
-            </div>
-
-            {/* Optional price or detail */}
-            <div className="mt-5 sm:mt-6">
-              <p></p>
-            </div>
-          </div>
-        </div>
-
-        {/* Button Section */}
-        <div className="flex px-4 sm:px-6 md:px-8 pb-6 sm:pb-8">
-          <a
-            href={tool.link}
-            className="items-center justify-center w-full px-5 sm:px-6 py-2 sm:py-2.5 md:py-3 
-            text-center text-black duration-200 bg-white border-2 border-white 
-            rounded-full hover:bg-transparent hover:border-white hover:text-white 
-            focus:outline-none focus-visible:outline-white 
-            text-xs sm:text-sm md:text-base"
-          >
-            Generate
-          </a>
-        </div>
+    <>
+      {/* Title */}
+      <div className="title px-4 sm:px-6">
+        <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-center text-gray-800 mt-10 sm:mt-12 mb-6 sm:mb-8">
+          Tools Section
+        </h1>
       </div>
-    ))}
-  </div>
-</>
 
+      {/* Main Tools Container */}
+      <div className="main-tools-section w-[95%] sm:w-[90%] md:w-[80%] max-w-6xl mx-auto rounded-2xl 
+        p-4 sm:p-6 md:p-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8">
+        
+        {tools.map((tool, index) => (
+          <div
+            key={index}
+            className="flex flex-col items-center bg-black/95 rounded-3xl text-white shadow-xl 
+              border border-gray-800 hover:border-blue-500/40 hover:shadow-[0_0_20px_rgba(59,130,246,0.3)] 
+              transition-all duration-300 ease-in-out hover:scale-105 p-6 sm:p-8"
+          >
+            {/* Icon */}
+            <div className="mb-4">{tool.icon}</div>
 
+            {/* Title & Description */}
+            <h2 className="text-lg sm:text-xl md:text-2xl font-semibold tracking-tight text-center mb-2">
+              {tool.title}
+            </h2>
+            <p className="text-sm sm:text-base text-gray-300 leading-relaxed text-center line-clamp-3 mb-6">
+              {tool.desc}
+            </p>
+
+            {/* Button */}
+            <a
+              href={tool.link}
+              className="mt-auto w-full px-6 py-2.5 text-center text-black bg-white border-2 border-white rounded-full 
+                hover:bg-transparent hover:text-white transition-all duration-300 text-sm sm:text-base font-medium"
+            >
+              Generate
+            </a>
+          </div>
+        ))}
+      </div>
+    </>
   );
 };
 
