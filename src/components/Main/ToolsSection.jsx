@@ -10,24 +10,25 @@ const ToolsSection = () => {
       link: "ArticleGen",
       // icon: <FileText className="w-10 h-10 text-blue-400" />, // icon added
     },
-    {
-      title: "Blog Writer",
-      desc: "Create SEO-optimized blog posts in seconds using AI-powered content generation.",
-      link: "BlogWriter",
-      // icon: <Sparkles className="w-10 h-10 text-cyan-400" />,
-    },
-    {
-      title: "Blog Writer",
-      desc: "Create SEO-optimized blog posts in seconds using AI-powered content generation.",
-      link: "BlogWriter",
-      // icon: <Sparkles className="w-10 h-10 text-cyan-400" />,
-    },
-    {
-      title: "Blog Writer",
-      desc: "Create SEO-optimized blog posts in seconds using AI-powered content generation.",
-      link: "BlogWriter",
-      // icon: <Sparkles className="w-10 h-10 text-cyan-400" />,
-    },
+   {
+  title: "Social Media Post Generator",
+  desc: "Generate catchy, platform-specific posts for Twitter, Instagram, LinkedIn, and more — instantly with AI.",
+  link: "PostGen",
+  // icon: <MessageCircle className="w-10 h-10 text-pink-400" />,
+},
+
+    // {
+    //   title: "Blog Writer",
+    //   desc: "Create SEO-optimized blog posts in seconds using AI-powered content generation.",
+    //   link: "BlogWriter",
+    //   // icon: <Sparkles className="w-10 h-10 text-cyan-400" />,
+    // },
+    // {
+    //   title: "Blog Writer",
+    //   desc: "Create SEO-optimized blog posts in seconds using AI-powered content generation.",
+    //   link: "BlogWriter",
+    //   // icon: <Sparkles className="w-10 h-10 text-cyan-400" />,
+    // },
   ];
 
   return (

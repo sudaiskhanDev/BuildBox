@@ -1,5 +1,5 @@
 import { generateArticle } from "../Controllers/GPT Models/ArticleGen.js";
-
+import { generatePost  } from "../Controllers/GPT Models/PostGen.js"
 
 export async function handleAiRoutes(req) {
   try {
@@ -8,6 +8,10 @@ export async function handleAiRoutes(req) {
 
     if (type === "article") {
       return await generateArticle(req);
+    }
+
+    if(type == "post"){
+      return await generatePost(req);
     }
 
     // ❌ Invalid Type
@@ -22,4 +26,4 @@ export async function handleAiRoutes(req) {
   }
 }
 
-
+ 
