@@ -55,79 +55,110 @@ const LoginModal = ({isOpen, onClose, onLogin}) => {
     return null;
 
   return (
-    <>
-      {/* Overlay background to dim the screen */}
-      <div className="fixed inset-0 bg-[#242424dd] bg-opacity-50 flex items-center justify-center z-50"
-      onClick={handleBackgroundClick}>
-        
-        {/* Modal container */}
-        <div className="bg-white w-[70%] max-w-md h-[500px] rounded-2xl overflow-hidden shadow-lg border border-white">
-          
-          {/* Header section with logo and title */}
-          <div className="popup-header w-full h-[20%] flex items-center justify-center gap-2">
-            <img src="/logo.png" alt="Logo" className="h-10" />
-            <h1 className="font-bold text-2xl">Build Box</h1>
+   <>
+  {/* Overlay background */}
+  <div
+    className="fixed inset-0 bg-[#242424dd] flex items-center justify-center z-50 px-3 sm:px-0"
+    onClick={handleBackgroundClick}
+  >
+    {/* Modal Container */}
+    <div
+      className="bg-white w-[90%] sm:w-[75%] md:w-[60%] lg:w-[450px] 
+        h-auto rounded-2xl overflow-hidden shadow-2xl border border-white"
+      onClick={(e) => e.stopPropagation()} // prevent closing on inside click
+    >
+      {/* Header */}
+      <div className="popup-header w-full h-[80px] sm:h-[100px] flex flex-col sm:flex-row items-center justify-center gap-2 p-4">
+        <img src="/logo.png" alt="Logo" className="h-10 sm:h-12" />
+        <h1 className="font-bold text-xl sm:text-2xl text-gray-900 text-center sm:text-left">
+          Build Box
+        </h1>
+      </div>
+
+      {/* Login Form Section */}
+      <div className="login-input bg-[#1F1F1F] w-full text-center p-5 sm:p-8 rounded-t-2xl">
+        <h1 className="text-[#848484] text-xl sm:text-2xl font-semibold mb-5 sm:mb-6">
+          Login
+        </h1>
+
+        {/* Inputs */}
+        <div className="login w-full flex flex-col justify-center items-center text-white space-y-3 sm:space-y-4">
+          {/* Email */}
+          <div className="w-full flex flex-col items-center">
+            <label
+              htmlFor="email"
+              className="block text-xs sm:text-sm font-medium mb-1"
+            >
+              Email
+            </label>
+            <input
+              placeholder="Enter Email"
+              type="text"
+              id="email"
+              className="bg-white w-[85%] sm:w-[70%] px-3 sm:px-4 py-2 rounded-md border text-black border-gray-300 focus:outline-none text-sm sm:text-base"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
           </div>
 
-          {/* Login form container */}
-          <div className="login-input bg-[#1F1F1F] w-full h-[80%] text-center p-4 rounded-t-2xl">
-            <h1 className="text-[#848484] text-2xl font-semibold mb-6">Login</h1>
-
-            {/* Form fields */}
-            <div className="login w-[90%] flex flex-col justify-center items-center max-w-sm mx-auto text-white">
-              
-              {/* Email input */}
-              <label htmlFor="email" className="block text-sm font-medium mb-1">Email</label>
-              <input
-                placeholder='Enter Email'
-                type="text"
-                id="email"
-                className="bg-white w-[70%] px-4 py-2 rounded border text-black border-gray-300 focus:outline-none mb-4"
-                value={email}
-                onChange={(e)=> setEmail(e.target.value)}
-              />
-
-              {/* Password input */}
-              <label htmlFor="password" className="block text-sm font-medium mb-1">Password</label>
-              <input
-              placeholder='Enter Password'
-                type="password"
-                id="password"
-                className="bg-white w-[70%] px-4 py-2 rounded border text-black border-gray-300 focus:outline-none mb-6"
-                value={password}
-                onChange={(e)=> setPassword(e.target.value)}
-              />
-
-              {/* Login button */}
-              <button className="w-[40%] bg-[#0064E1] text-white py-2 rounded hover:bg-[#00469b] transition"
-              onClick={handleLogin}
-              disabled={loader}
-              >
-                {loader ?(
-                  
-                  <>
-                   <span className="loader border-2 border-white border-t-transparent rounded-full w-4 h-4 animate-spin"></span>
-                    Logging in...
-                  </>
-                ): (
-                  "Login"
-                )}
-                
-              </button>
-              <p>{message}</p>
-            </div>
-
-            {/* Footer section with Google login */}
-            <div className="popup-footer w-full mt-8 flex flex-col items-center justify-center">
-              <button className="flex items-center gap-3 bg-white border border-gray-300 px-4 py-2 rounded-lg shadow-sm hover:shadow-md transition duration-200">
-                <img src="/googlelogo.png" alt="Google" className="w-6 h-6" />
-                <span className="text-sm font-medium text-gray-700">Continue with Google</span>
-              </button>
-            </div>
+          {/* Password */}
+          <div className="w-full flex flex-col items-center">
+            <label
+              htmlFor="password"
+              className="block text-xs sm:text-sm font-medium mb-1"
+            >
+              Password
+            </label>
+            <input
+              placeholder="Enter Password"
+              type="password"
+              id="password"
+              className="bg-white w-[85%] sm:w-[70%] px-3 sm:px-4 py-2 rounded-md border text-black border-gray-300 focus:outline-none text-sm sm:text-base"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
           </div>
+
+          {/* Login Button */}
+          <button
+            className="w-[50%] sm:w-[40%] bg-[#0064E1] text-white py-2 rounded-md 
+              hover:bg-[#00469b] transition text-sm sm:text-base font-medium flex justify-center items-center gap-2"
+            onClick={handleLogin}
+            disabled={loader}
+          >
+            {loader ? (
+              <>
+                <span className="loader border-2 border-white border-t-transparent rounded-full w-4 h-4 animate-spin"></span>
+                Logging in...
+              </>
+            ) : (
+              "Login"
+            )}
+          </button>
+
+          {/* Message */}
+          {message && (
+            <p className="text-xs sm:text-sm text-gray-300 mt-1">{message}</p>
+          )}
+        </div>
+
+        {/* Footer (Google login) */}
+        <div className="popup-footer w-full mt-6 sm:mt-8 flex flex-col items-center justify-center">
+          <button
+            className="flex items-center gap-3 bg-white border border-gray-300 px-4 py-2 sm:px-5 sm:py-2.5 
+              rounded-lg shadow-sm hover:shadow-md transition duration-200"
+          >
+            <img src="/googlelogo.png" alt="Google" className="w-5 h-5 sm:w-6 sm:h-6" />
+            <span className="text-xs sm:text-sm font-medium text-gray-700">
+              Continue with Google
+            </span>
+          </button>
         </div>
       </div>
-    </>
+    </div>
+  </div>
+</>
+
   );
 };
 
