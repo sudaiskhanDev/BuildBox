@@ -47,8 +47,8 @@ const Page = () => {
     setDisplayedText("");
 
     try {
-      const res = await axios.post("/api/ai?type=post", { text: input });
-      setOutput(res.data.article);
+      const res = await axios.post("/api/ai?type=post", { topic: input });
+      setOutput(res.data.post);
     } catch (err) {
       console.error("❌ Error generating article:", err);
       setError("Something went wrong! Please try again.");

@@ -8,7 +8,7 @@ export const generatePost = async(req) =>{
         //Prompt Templete
 
         const response = await openai.chat.completions.create({
-            model: "gpt-3.5-turbo",
+            model: "gpt-4o-mini",
             messages: [
     {
       role: "system",
@@ -51,11 +51,11 @@ Return only the final post text — no explanations.
 });
 
         const post = response.choices[0].message.content;
-        return new Response(JSON.stringify({ post})),
+        return new Response(JSON.stringify({ post}),
         {
             status:200
         }
-
+    )
     } catch (error) {
         console.log("❌ AI Generation Error:", error)
         return new Response(
