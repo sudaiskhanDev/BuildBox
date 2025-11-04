@@ -40,8 +40,14 @@ const Page = () => {
     <>
     <div className='bg-[#000000] h-screen flex justify-center items-center'>
         <div className="main-input-output w-[90%] md:w-[80%] max-w-4xl h-[790px] mx-auto mt-12 mb-8 rounded-2xl shadow-lg overflow-hidden flex flex-col border bg-[#212121] border-gray-900">
+           <div className="header mt-3 flex flex-col justify-center items-center w-full h-[30px]">
+                <h1 className='text-white text-3xl font-bold'>Build Box</h1>
+<hr className='text-white w-[100%]' />
+          </div>
+          
         {/* Output Section */}
         <div className="output-section flex-grow p-6 overflow-y-auto m-auto">
+         
             {loading ? (
                 <div className='flex justify-center items-center align-middle'>
                     <Loader />
@@ -99,7 +105,7 @@ const Page = () => {
         </div>
     </div>
     </div>
-    </>
+    </> 
   )
 }
 export default Page
