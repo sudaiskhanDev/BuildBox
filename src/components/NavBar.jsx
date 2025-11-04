@@ -53,14 +53,14 @@ const NavBar = () => {
 
   return (
     <>
-      <div className="main-nav relative flex justify-between items-center w-[90%] md:w-[80%] px-4 m-auto">
+      <div className="main-nav relative flex justify-between items-center w-[90%] md:w-[80%]   m-auto">
         {/* Logo */}
-        <div className="logo">
+        <div className="logo ">
           <img src="/logo.png" alt="Logo" className="w-auto h-10 md:h-12" />
         </div>
 
         {/* Desktop Nav Links */}
-        <div className="hidden md:flex bg-black h-12 px-10 rounded-b-full justify-center items-center">
+        <div className="hidden md:flex bg-black w-[600px] h-12 ml-25 px-10 rounded-b-full justify-center items-center">
           <ul className="flex space-x-8 text-sm font-medium text-white">
             <li><a href="#" className="hover:text-gray-400 transition">Home</a></li>
             <li><a href="#" className="hover:text-gray-400 transition">Tools</a></li>
@@ -69,7 +69,7 @@ const NavBar = () => {
         </div>
 
         {/* Desktop Login Section */}
-        <div className="hidden md:flex items-center w-[300px] justify-end text-white">
+        <div className="hidden md:flex justify-between items-center w-[250px] text-white">
           {!user ? (
             <>
               <button
@@ -101,6 +101,7 @@ const NavBar = () => {
 
         {/* Mobile Menu Icon */}
         <div className="md:hidden flex items-center">
+          
           <button onClick={toggleMobileMenu} className="text-black text-3xl">
             {isMobileMenuOpen ? "✖" : "☰"}
           </button>
