@@ -1,61 +1,63 @@
-"use client"
-import React, { useState } from 'react'
-import axios from 'axios'
-import ReactMarkdown from 'react-markdown'
-import Loader from '@/components/Main/Loader.jsx'
+"use client";
+import React, { useState } from "react";
+import axios from "axios";
+import ReactMarkdown from "react-markdown";
+import Loader from "@/components/Main/Loader.jsx";
+import GenLoader from "@/components/Main/GenLoader";
 
 const Page = () => {
+  const [input, setInput] = useState("");
+  const [output, setOutput] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
-    const [input , setInput] = useState("")
-    const [output , setOutput] = useState("")
-    const[loading, setLoading] = useState(false)
-    const[error, setError] =useState('')
-
-    const handleGenerate = async () =>{
-        if(!input.trim()) {
-            setError("Please enter a topic first")
-            return
-        }
-
-        setError('')
-        setLoading(true)
-        setOutput('')
-
-        try {
-            
-            const res = await axios.post("/api/ai?type=article", { text: input });
-            setOutput(res.data.article);
-            setLoading(false)
-
-        } catch (error) {
-            console.error("❌ Error generating article:", err);
-      setError("Something went wrong! Please try again.");
-        } finally{
-            setLoading(false)
-        }
-
+  const handleGenerate = async () => {
+    if (!input.trim()) {
+      setError("Please enter a topic first");
+      return;
     }
 
-  return ( 
+    setError("");
+    setLoading(true);
+    setOutput("");
+
+    try {
+      const res = await axios.post("/api/ai?type=article", { text: input });
+      setOutput(res.data.article);
+    } catch (err) {
+      console.error("❌ Error generating article:", err);
+      setError("Something went wrong! Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
     <>
-    <div className='bg-[#000000] h-screen flex justify-center items-center'>
-        <div className="main-input-output w-[90%] md:w-[80%] max-w-4xl h-[790px] mx-auto mt-12 mb-8 rounded-2xl shadow-lg overflow-hidden flex flex-col border bg-[#212121] border-gray-900">
-           <div className="header mt-3 flex flex-col justify-center items-center w-full h-[30px]">
-                <h1 className='text-white text-3xl font-bold'>Build Box</h1>
-<hr className='text-white w-[100%]' />
+      <div className="bg-black min-h-screen flex justify-center items-center py-6 px-4">
+        <div className="main-input-output w-full sm:w-[90%] md:w-[85%] lg:w-[75%] max-w-6xl min-h-[600px] bg-[#212121] border border-gray-800 rounded-2xl shadow-2xl flex flex-col overflow-hidden">
+
+          {/* Header */}
+          <div className="header flex flex-col items-center justify-center w-full py-4 px-2 border-b border-gray-700">
+            <h1 className="text-white text-2xl sm:text-3xl md:text-4xl font-bold tracking-wide">
+              Build Box
+            </h1>
+            <div className="w-[90%] border-b border-gray-600 mt-2"></div>
           </div>
-          
-        {/* Output Section */}
-        <div className="output-section flex-grow p-6 overflow-y-auto m-auto">
-         
+
+          {/* Output Section */}
+          <div className="output-section flex-grow px-4 sm:px-6 py-4 overflow-y-auto">
             {loading ? (
-                <div className='flex justify-center items-center align-middle'>
-                    <Loader />
-                </div>
+              <div className="flex justify-center items-center h-60">
+                <Loader />
+              </div>
             ) : error ? (
-                <p className="text-red-500 text-center mt-10">{error}</p>
-            ) : output ? ( 
-                 <div className="prose prose-invert max-w-none text-white">
+              <p className="text-red-500 text-center mt-10 text-sm sm:text-base">
+                {error}
+              </p>
+            ) : output ? (
+              <div className="prose prose-invert max-w-none text-white">
+               <div className="prose prose-invert max-w-none text-white">
   <ReactMarkdown
   components={{
                   h1: ({ children }) => (
@@ -75,37 +77,52 @@ const Page = () => {
                   ),
                 }}>{output}</ReactMarkdown>
 </div>
-            ):(
-  <p className="text-gray-400 text-center mt-10">No output yet.</p>
-)
-        }
-        </div>
+              </div>
+            ) : (
+              <p className="text-gray-500 text-center mt-10 text-sm sm:text-base">
+                No output yet. Enter a topic below to get started.
+              </p>
+            )}
+          </div>
 
-        {/* Input Section */}
-        <div className="input-section w-full h-[150px]  flex justify-center items-center p-4">
-            <div className="input-text-btn w-full sm:w-[80%] md:w-[60%] h-[60px]  rounded-full shadow-md flex items-center px-2 bg-[#3d3d3d] ">
-                <div className="text-input flex-grow h-[40px] overflow-hidden">
-                    <input 
-                      value={input}
-                      onChange={(e)=>setInput(e.target.value)}
-                        type="text"
-                        placeholder="Enter your topic here..."
-                        className='w-full h-full px-4 outline-none border-none bg-transparent text-white placeholder-white' 
-                    />
-                </div>
-                <div className="generate-btn ml-2">
-                    <button
-                    onClick={handleGenerate}
-                    disabled={loading}
-                    className="flex items-center bg-blue-600 text-white text-base px-5 py-2 rounded-full border-none transition-all duration-200 ease-in-out hover:bg-blue-700 active:scale-95 shadow-lg">
-                        Generate
-                    </button>
-                </div>
+          {/* Input Section */}
+          <div className="input-section w-full py-4 px-3 sm:px-6 bg-[#1a1a1a] border-t border-gray-700">
+            <div className="input-text-btn flex flex-col sm:flex-row items-center gap-3 sm:gap-4 w-full">
+              <input
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                type="text"
+                placeholder="Enter your topic here..."
+                className="flex-grow w-full sm:w-auto bg-[#2e2e2e] text-white placeholder-gray-400 px-4 py-3 rounded-full outline-none border border-gray-700 focus:border-blue-500 transition-all duration-300 text-sm sm:text-base"
+              />
+
+             <button
+  onClick={handleGenerate}
+  disabled={loading}
+  className={`w-full sm:w-auto flex justify-center items-center gap-2 
+  font-semibold px-6 py-3 rounded-full shadow-md text-sm sm:text-base
+  transition-all duration-300 ease-in-out
+  ${loading 
+    ? "bg-blue-500 cursor-not-allowed opacity-80" 
+    : "bg-blue-600 hover:bg-blue-700 active:scale-95 text-white shadow-blue-900/30"
+  }`}
+>
+  {loading ? (
+    <div className="flex justify-center items-center gap-2">
+      <GenLoader />
+      
+    </div>
+  ) : (
+    "Generate"
+  )}
+</button>
+
             </div>
+          </div>
         </div>
-    </div>
-    </div>
-    </> 
-  )
-}
-export default Page
+      </div>
+    </>
+  );
+};
+
+export default Page;
