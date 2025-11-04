@@ -23,7 +23,7 @@ const Page = () => {
       index++;
 
       if (index >= output.length) clearInterval(interval);
-    }, 100); // 👈 speed (ms) — 10 = fast typing, 50 = slow typing
+    }, 1); // 👈 speed (ms) — 10 = fast typing, 50 = slow typing
 
     return () => clearInterval(interval);
   }, [output]);
