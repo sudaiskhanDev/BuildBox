@@ -1,4 +1,5 @@
 import Header from '@/components/Main/Header'
+import SolutionSection from '@/components/Main/SolutionSection'
 import TeamsLogo from '@/components/Main/TeamsLogo'
 import ToolsSection from '@/components/Main/ToolsSection'
 import UseProblemsSection from '@/components/Main/UseProblemsSection'
@@ -12,7 +13,8 @@ const page = () => {
    <Header />
    <TeamsLogo />
    <ToolsSection />
-<UseProblemsSection/>
+   <UseProblemsSection/>
+   <SolutionSection />
    </>
   )
 }
