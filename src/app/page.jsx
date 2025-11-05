@@ -1,5 +1,6 @@
 import Footer from '@/components/Main/Footer'
 import Header from '@/components/Main/Header'
+import Pricing from '@/components/Main/Pricing'
 import SolutionSection from '@/components/Main/SolutionSection'
 import TeamsLogo from '@/components/Main/TeamsLogo'
 import ToolsSection from '@/components/Main/ToolsSection'
@@ -15,6 +16,7 @@ const page = () => {
    <TeamsLogo />
    <ToolsSection />
    <UseProblemsSection/>
+   <Pricing />
    <SolutionSection />
    <Footer />
    </>
