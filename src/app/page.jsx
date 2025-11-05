@@ -1,4 +1,5 @@
 import Header from '@/components/Main/Header'
+import TeamsLogo from '@/components/Main/TeamsLogo'
 import ToolsSection from '@/components/Main/ToolsSection'
 import NavBar from '@/components/NavBar'
 import React from 'react'
@@ -8,6 +9,7 @@ const page = () => {
    <>
    <NavBar />
    <Header />
+   <TeamsLogo />
    <ToolsSection />
  
    </>
