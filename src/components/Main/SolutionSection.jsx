@@ -50,21 +50,7 @@ const SolutionSection = () => {
         />
       </div>
 
-      {/* Card 3 */}
-      <div className="bg-white rounded-2xl p-5 sm:p-6 shadow-md hover:shadow-2xl transition-all duration-300 border border-gray-100 flex flex-col h-full">
-        <h3 className="text-lg sm:text-xl font-semibold text-[#1d4ed8] mb-3">
-          Seamless Integration
-        </h3>
-        <p className="text-gray-700 text-[15px] leading-relaxed mb-5 flex-grow">
-          Connect effortlessly with your favorite tools like Notion, WordPress, 
-          and Zapier for an automated, streamlined workflow.
-        </p>
-        <img
-          src="https://images.unsplash.com/photo-1605902711622-cfb43c4437b5?auto=format&fit=crop&w=800&q=80"
-          alt="Integration"
-          className="rounded-xl border border-gray-100 w-full object-cover h-52 sm:h-56 md:h-60"
-        />
-      </div>
+      
 
       {/* Card 4 */}
       <div className="bg-white rounded-2xl p-5 sm:p-6 shadow-md hover:shadow-2xl transition-all duration-300 border border-gray-100 flex flex-col h-full sm:col-span-2 lg:col-span-1">
