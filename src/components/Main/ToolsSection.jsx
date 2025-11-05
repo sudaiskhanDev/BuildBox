@@ -36,6 +36,26 @@ const ToolsSection = () => {
       desc: "Find perfect, trending hashtags tailored for your niche and audience.",
       link: "HashtagGen",
     },
+    {
+      title: "Hashtag Generator",
+      desc: "Find perfect, trending hashtags tailored for your niche and audience.",
+      link: "HashtagGen",
+    },
+    {
+      title: "Hashtag Generator",
+      desc: "Find perfect, trending hashtags tailored for your niche and audience.",
+      link: "HashtagGen",
+    },
+    {
+      title: "Hashtag Generator",
+      desc: "Find perfect, trending hashtags tailored for your niche and audience.",
+      link: "HashtagGen",
+    },
+    {
+      title: "Hashtag Generator",
+      desc: "Find perfect, trending hashtags tailored for your niche and audience.",
+      link: "HashtagGen",
+    },
   ];
 
   const visibleTools = showAll ? tools : tools.slice(0, 4);
