@@ -112,12 +112,14 @@ const ToolsSection = () => {
       {/* Explore More Button */}
       <div className="flex justify-center mt-8 sm:mt-10 mb-8">
         <button
+        href="Input"
           className="px-8 py-2.5 sm:py-3 text-white font-semibold text-sm sm:text-base rounded-full 
           bg-gradient-to-r from-indigo-600 to-blue-500 
           hover:from-indigo-500 hover:to-blue-400 
           transition-all duration-300 shadow-[0_0_15px_rgba(59,130,246,0.3)] hover:shadow-[0_0_25px_rgba(59,130,246,0.5)]"
         >
-          Explore More Tools
+          <a href="Input">Explore More Tools</a>
+          
         </button>
       </div>
     </>
