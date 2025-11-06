@@ -46,7 +46,7 @@ const ToolsSection = () => {
   return (
     <>
       {/* Section Title */}
-      <div className="text-center mt-8 sm:mt-10 mb-4 sm:mb-6 px-4">
+      <div  id="toolsection" className="text-center mt-8 sm:mt-10 mb-4 sm:mb-6 px-4">
         <h1 className="text-xl sm:text-3xl font-extrabold text-gray-500 tracking-tight">
           Featured AI Tools
         </h1>

@@ -25,7 +25,7 @@ const Header = () => {
             role="button"
             className="group relative inline-flex items-center justify-center text-sm sm:text-base md:text-lg rounded-xl bg-gray-900 px-6 sm:px-8 md:px-10 py-2.5 sm:py-3 font-semibold text-white transition-all duration-200 hover:bg-gray-800 hover:shadow-lg hover:-translate-y-0.5 hover:shadow-gray-600/30"
             title="payment"
-            href="#"
+            href=""
           >
             Get Started For Free
             <svg
