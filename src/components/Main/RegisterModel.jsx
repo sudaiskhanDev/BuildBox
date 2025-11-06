@@ -82,7 +82,7 @@ const RegisterModel = ( {isOpen, onClose,onRegister}) => {
       </div>
 
       {/* Signup Form Section */}
-      <div className="login-input bg-[#1F1F1F] w-full text-center p-5 sm:p-8 rounded-t-2xl">
+      <div className="login-input bg-[#000000] w-full text-center p-5 sm:p-8 rounded-t-2xl">
         <h1 className="text-[#848484] text-xl sm:text-2xl font-semibold mb-5 sm:mb-6">
           Sign Up
         </h1>
@@ -152,7 +152,7 @@ const RegisterModel = ( {isOpen, onClose,onRegister}) => {
           >
             {loader ? (
               <>
-                <span className="loader border-2 border-white border-t-transparent rounded-full w-4 h-4 animate-spin"></span>
+                <span className="loading border-2 border-white border-t-transparent rounded-full w-4 h-4 animate-spin"></span>
                 Registering...
               </>
             ) : (

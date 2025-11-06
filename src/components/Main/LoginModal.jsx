@@ -58,7 +58,7 @@ const LoginModal = ({isOpen, onClose, onLogin}) => {
    <>
   {/* Overlay background */}
   <div
-    className="fixed inset-0 bg-[#242424dd] flex items-center justify-center z-50 px-3 sm:px-0"
+    className="fixed inset-0 bg-[#000000dd] flex items-center justify-center z-50 px-3 sm:px-0"
     onClick={handleBackgroundClick}
   >
     {/* Modal Container */}
@@ -76,7 +76,7 @@ const LoginModal = ({isOpen, onClose, onLogin}) => {
       </div>
 
       {/* Login Form Section */}
-      <div className="login-input bg-[#1F1F1F] w-full text-center p-5 sm:p-8 rounded-t-2xl">
+      <div className="login-input bg-[#000000] w-full text-center p-5 sm:p-8 rounded-t-2xl">
         <h1 className="text-[#848484] text-xl sm:text-2xl font-semibold mb-5 sm:mb-6">
           Login
         </h1>
@@ -128,7 +128,7 @@ const LoginModal = ({isOpen, onClose, onLogin}) => {
           >
             {loader ? (
               <>
-                <span className="loader border-2 border-white border-t-transparent rounded-full w-4 h-4 animate-spin"></span>
+                <span className="loading border-2 border-white border-t-transparent rounded-full w-4 h-4 animate-spin"></span>
                 Logging in...
               </>
             ) : (

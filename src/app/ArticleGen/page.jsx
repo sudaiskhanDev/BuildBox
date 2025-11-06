@@ -58,6 +58,7 @@ const Page = () => {
   };
 
   return (
+    <>
     <div className="bg-gradient-to-b from-[#0a0a0a] to-[#1a1a1a] min-h-screen flex justify-center items-center py-10 px-4">
       <div
         className="main-input-output relative w-full sm:w-[90%] md:w-[85%] lg:w-[75%] max-w-6xl 
@@ -168,6 +169,7 @@ const Page = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 
