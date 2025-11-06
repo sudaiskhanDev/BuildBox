@@ -26,7 +26,7 @@ const UseProblemsSection = () => {
           Content Overload
         </h3>
         <p className="text-gray-700 leading-relaxed font-medium text-[14px] sm:text-[15px] text-center sm:text-left">
-          Businesses and creators struggle to produce a constant flow of high-quality blogs, posts, and ideas — wasting hours on brainstorming and editing.
+          Businesses and creators struggle to produce a constant flow of high quality blogs, posts, and ideas wasting hours on brainstorming and editing.
         </p>
       </div>
 
@@ -39,7 +39,7 @@ const UseProblemsSection = () => {
           Slow Content Production
         </h3>
         <p className="text-gray-700 leading-relaxed font-medium text-[14px] sm:text-[15px] text-center sm:text-left">
-          Traditional writing takes too long — from idea to final draft. This delay costs engagement, traffic, and opportunities in fast-moving digital markets.
+          Traditional writing takes too long from idea to final draft. This delay costs engagement, traffic, and opportunities in fast-moving digital markets.
         </p>
       </div>
 

@@ -56,7 +56,7 @@ const ToolsSection = () => {
       </div>
 
       {/* Tools Carousel */}
-      <div className="relative w-full sm:w-[95%] md:w-[85%] mx-auto px-2 sm:px-0">
+      <div className="relative w-[70%] sm:w-[95%] md:w-[85%] mx-auto px-2 sm:px-0">
         {/* Left Scroll Button (hidden on mobile) */}
         <button
           onClick={() => scroll("left")}

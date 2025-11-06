@@ -10,7 +10,7 @@ const SolutionSection = () => {
         Empower Your Business with AI Workflows
       </h2>
       <p className="text-gray-600 text-sm sm:text-base md:text-lg lg:text-xl max-w-3xl mx-auto">
-        Our intelligent AI platform combines automation, creativity, and performance — 
+        Our intelligent AI platform combines automation, creativity, and performance 
         giving you tailored content solutions for blogs, posts, and social campaigns.
       </p>
     </div>
@@ -58,7 +58,7 @@ const SolutionSection = () => {
           Customizable Solutions
         </h3>
         <p className="text-gray-700 text-[15px] leading-relaxed mb-5 flex-grow">
-          Whether it's blog writing, social captions, or ad copies — 
+          Whether it's blog writing, social captions, or ad copies 
           customize every AI tool to match your business voice and goals.
         </p>
         <img

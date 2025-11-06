@@ -60,7 +60,7 @@ const Pricing = () => {
         Choose the plan that fits your goals
       </h2>
       <p className="text-gray-500 max-w-xl mx-auto mb-8 text-sm sm:text-base">
-        Simple, transparent pricing — no hidden fees. Switch between monthly or yearly anytime.
+        Simple, transparent pricing no hidden fees. Switch between monthly or yearly anytime.
       </p>
 
       {/* Toggle */}
