@@ -25,7 +25,7 @@ const Page = () => {
       setDisplayedText((prev) => prev + output[index]);
       index++;
       if (index >= output.length) clearInterval(interval);
-    }, 1);
+    }, 20);
     return () => clearInterval(interval);
   }, [output]);
 
@@ -97,7 +97,7 @@ const Page = () => {
           sidebarOpen ? "translate-x-0" : "-translate-x-full"
         } md:hidden`}
       >
-        <h1 className="text-xl font-semibold mb-4 text-gray-800 flex justify-center items-center">Tools</h1>
+        <h1 className="text-xl font-semibold mb-4 text-gray-800 ">Tools</h1>
         <div className="flex flex-col gap-2">
           {navTools.map((tool) => (
             <div
