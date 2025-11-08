@@ -1,28 +1,44 @@
 "use client";
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ReactMarkdown from "react-markdown";
+import Loader from "@/components/Main/Loader.jsx";
 
-import Loader  from "@/components/Main/Loader.jsx"
 const Page = () => {
   const [selectedTool, setSelectedTool] = useState("Article");
   const [input, setInput] = useState("");
   const [output, setOutput] = useState("");
+  const [displayedText, setDisplayedText] = useState(""); // For typing effect
   const [loader, setLoader] = useState(false);
   const [error, setError] = useState("");
 
   const navTools = ["Article", "Post", "Blog"];
 
+  // Typing effect
+  useEffect(() => {
+    if (!output) return;
+    setDisplayedText("");
+    let index = 0;
+    const interval = setInterval(() => {
+      setDisplayedText((prev) => prev + output[index]);
+      index++;
+      if (index >= output.length) clearInterval(interval);
+    }, 20); // adjust speed here (ms per character)
+    return () => clearInterval(interval);
+  }, [output]);
+
   const handleGenerator = async () => {
     if (!input.trim()) {
       setError("Please Enter Something");
       setOutput("");
+      setDisplayedText("");
       return;
     }
 
     setError("");
     setLoader(true);
     setOutput("");
+    setDisplayedText("");
 
     try {
       const toolkey = selectedTool.toLowerCase().replace(/\s+/g, "_");
@@ -72,39 +88,27 @@ const Page = () => {
           </div>
 
           {/* Output Section */}
-          <div className="output flex-1 p-4 overflow-y-auto border-b border-gray-200 text-sm sm:text-base ">
-            {loader && <p className="text-gray-500 flex justify-center items-center m-auto"> <Loader/> </p>}
+          <div className="output flex-1 p-4 overflow-y-auto border-b border-gray-200 text-sm sm:text-base">
+            {loader && (
+              <p className="text-gray-500 flex justify-center items-center m-auto">
+                <Loader />
+              </p>
+            )}
             {error && <p className="text-red-500">{error}</p>}
-            {output && <p className="whitespace-pre-wrap"><ReactMarkdown className="prose prose-sm sm:prose-base max-w-none"
-            components={{
-                  h1: ({ children }) => (
-                    <h1 className="text-4xl font-bold text-blue-700 mb-4">
-                      {children}
-                    </h1>
-                  ),
-                  h2: ({ children }) => (
-                    <h2 className="text-3xl font-semibold text-cyan-600 mb-3">
-                      {children}
-                    </h2>
-                  ),
-                  h3: ({ children }) => (
-                    <h3 className="text-2xl font-semibold text-blue-400 mb-2">
-                      {children}
-                    </h3>
-                  ),
-                  p: ({ children }) => (
-                    <p className="text-white leading-relaxed text-base mb-4">
-                      {children}
-                    </p>
-                  ),
-                  li: ({ children }) => (
-                    <li className="text-white mb-2 ml-4 list-disc">
-                      {children}
-                    </li>
-                  ),
-                }}>
-  {output}
-</ReactMarkdown></p>}
+            {displayedText && (
+              <ReactMarkdown
+                className="prose prose-sm sm:prose-base max-w-none"
+                components={{
+                  h1: ({ children }) => <h1 className="text-4xl font-bold text-blue-700 mb-4">{children}</h1>,
+                  h2: ({ children }) => <h2 className="text-3xl font-semibold text-cyan-600 mb-3">{children}</h2>,
+                  h3: ({ children }) => <h3 className="text-2xl font-semibold text-blue-400 mb-2">{children}</h3>,
+                  p: ({ children }) => <p className="text-gray-800 leading-relaxed text-base mb-4">{children}</p>,
+                  li: ({ children }) => <li className="text-gray-800 mb-2 ml-4 list-disc">{children}</li>,
+                }}
+              >
+                {displayedText}
+              </ReactMarkdown>
+            )}
           </div>
 
           {/* Input Section */}
