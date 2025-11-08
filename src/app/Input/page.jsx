@@ -1,81 +1,84 @@
 "use client";
+
 import axios from "axios";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import ReactMarkdown from "react-markdown";
 import Loader from "@/components/Main/Loader.jsx";
 import { HiMenu, HiX, HiSun, HiMoon } from "react-icons/hi";
 
 const Page = () => {
+  // ---------------------
+  // State Variables
+  // ---------------------
   const [selectedTool, setSelectedTool] = useState("Article");
   const [input, setInput] = useState("");
   const [output, setOutput] = useState("");
-  const [displayedText, setDisplayedText] = useState("");
   const [loader, setLoader] = useState(false);
   const [error, setError] = useState("");
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [darkMode, setDarkMode] = useState(false); // Dark mode state
+  const [darkMode, setDarkMode] = useState(false);
 
   const navTools = ["Article"];
+  const outputRef = useRef(null);
 
-  // Apply dark class to <body>
+  // ---------------------
+  // Effects
+  // ---------------------
+  // Apply dark mode class to body
   useEffect(() => {
-    if (darkMode) {
-      document.body.classList.add("dark");
-    } else {
-      document.body.classList.remove("dark");
-    }
+    if (darkMode) document.body.classList.add("dark");
+    else document.body.classList.remove("dark");
   }, [darkMode]);
 
-  // Typing effect
+  // Auto-scroll output
   useEffect(() => {
-    if (!output) return;
-    setDisplayedText("");
-    let index = 0;
-    const interval = setInterval(() => {
-      setDisplayedText((prev) => prev + output[index]);
-      index++;
-      if (index >= output.length) clearInterval(interval);
-    }, 20);
-    return () => clearInterval(interval);
+    if (outputRef.current) {
+      outputRef.current.scrollTop = outputRef.current.scrollHeight;
+    }
   }, [output]);
 
+  // ---------------------
+  // Handlers
+  // ---------------------
   const handleGenerator = async () => {
     if (!input.trim()) {
-      setError("Please Enter Something");
+      setError("Please enter something");
       setOutput("");
-      setDisplayedText("");
       return;
     }
 
     setError("");
     setLoader(true);
     setOutput("");
-    setDisplayedText("");
 
     try {
-      const toolkey = selectedTool.toLowerCase().replace(/\s+/g, "_");
-      const response = await axios.post(`/api/ai?type=${toolkey}`, { text: input });
+      const toolKey = selectedTool.toLowerCase().replace(/\s+/g, "_");
+      const response = await axios.post(`/api/ai?type=${toolKey}`, { text: input });
 
-      if (response.data && response.data[toolkey]) {
-        setOutput(response.data[toolkey]);
+      if (response.data && response.data[toolKey]) {
+        setOutput(response.data[toolKey]);
       } else {
-        setError("Issue with Backend");
+        setError("Issue with backend");
       }
-    } catch (error) {
-      console.error("Error generating content:", error);
-      setError("Something Error in Request");
+    } catch (err) {
+      console.error("Error generating content:", err);
+      setError("Something went wrong");
     } finally {
       setLoader(false);
     }
   };
 
+  // ---------------------
+  // Render
+  // ---------------------
   return (
-    <div className="flex w-full min-h-screen bg-gray-100 dark:bg-gray-900 transition-colors duration-300">
-      {/* Sidebar desktop */}
+    <div className="flex flex-col md:flex-row w-full min-h-screen bg-gray-100 dark:bg-gray-900 transition-colors duration-300">
+      
+      {/* ---------------- Sidebar (Desktop) ---------------- */}
       <div className="hidden md:flex md:flex-col w-[20%] bg-white dark:bg-gray-800 shadow-md p-4">
         <div className="flex justify-between items-center mb-4">
           <h1 className="text-xl font-semibold text-gray-800 dark:text-gray-200">Tools</h1>
-          <button onClick={() => setDarkMode(!darkMode)} className="text-xl text-yellow-500 dark:text-yellow-400">
+          <button onClick={() => setDarkMode(!darkMode)} className="text-xl">
             {darkMode ? <HiSun /> : <HiMoon />}
           </button>
         </div>
@@ -96,20 +99,20 @@ const Page = () => {
         </div>
       </div>
 
-      {/* Mobile Sidebar toggle */}
+      {/* ---------------- Mobile Sidebar Toggle ---------------- */}
       <div className="md:hidden fixed top-4 left-4 z-50 flex gap-2">
         <button
           onClick={() => setSidebarOpen(!sidebarOpen)}
-          className="text-2xl text-blue-600 dark:text-blue-400"
+          className="text-2xl text-blue-600 dark:text-blue-400 flex items-center justify-center"
         >
           {sidebarOpen ? <HiX /> : <HiMenu />}
         </button>
-        <button onClick={() => setDarkMode(!darkMode)} className="text-2xl text-yellow-500 dark:text-yellow-400">
+        <button onClick={() => setDarkMode(!darkMode)} className="text-2xl">
           {darkMode ? <HiSun /> : <HiMoon />}
         </button>
       </div>
 
-      {/* Mobile Sidebar */}
+      {/* ---------------- Mobile Sidebar ---------------- */}
       <div
         className={`fixed top-0 left-0 h-full w-64 bg-white dark:bg-gray-800 shadow-md p-4 z-40 transform transition-transform duration-300 ${
           sidebarOpen ? "translate-x-0" : "-translate-x-full"
@@ -136,23 +139,27 @@ const Page = () => {
         </div>
       </div>
 
-      {/* Main content */}
-      <div className="flex-1 flex justify-center items-center p-4 md:ml-0 w-full">
-        <div className="input-output bg-white dark:bg-gray-800 w-full sm:w-[90%] md:w-[70%] xl:w-[60%] rounded-xl shadow-md overflow-hidden flex flex-col h-[85vh] transition-colors duration-300">
+      {/* ---------------- Main Content ---------------- */}
+      <div className="flex-1 flex justify-center items-center p-4 w-full">
+        <div className="flex flex-col w-full sm:w-[95%] md:w-[70%] xl:w-[60%] h-[85vh] bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden transition-colors duration-300">
+          
           {/* Header */}
-          <div className="output-container bg-blue-600 text-white text-center py-3">
+          <div className="bg-blue-600 text-white text-center py-3">
             <h1 className="text-lg sm:text-xl font-semibold">{selectedTool} Generator</h1>
           </div>
 
           {/* Output Section */}
-          <div className="output flex-1 p-4 overflow-y-auto border-b border-gray-200 dark:border-gray-700 text-sm sm:text-base">
+          <div
+            ref={outputRef}
+            className="flex-1 p-4 overflow-y-auto border-b border-gray-200 dark:border-gray-700 text-sm sm:text-base"
+          >
             {loader && (
               <p className="text-gray-500 dark:text-gray-300 flex justify-center items-center m-auto">
                 <Loader />
               </p>
             )}
             {error && <p className="text-red-500">{error}</p>}
-            {displayedText && (
+            {output && (
               <ReactMarkdown
                 className="prose prose-sm sm:prose-base max-w-none dark:prose-invert"
                 components={{
@@ -163,19 +170,20 @@ const Page = () => {
                   li: ({ children }) => <li className="text-gray-800 dark:text-gray-200 mb-2 ml-4 list-disc">{children}</li>,
                 }}
               >
-                {displayedText}
+                {output}
               </ReactMarkdown>
             )}
           </div>
 
           {/* Input Section */}
-          <div className="input p-3 flex flex-col sm:flex-row gap-3 border-t border-gray-200 dark:border-gray-700">
+          <div className="p-3 flex flex-col sm:flex-row gap-3 border-t border-gray-200 dark:border-gray-700">
             <input
               value={input}
               onChange={(e) => setInput(e.target.value)}
               type="text"
               placeholder="Enter topic..."
               className="flex-1 border border-gray-300 dark:border-gray-600 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 dark:bg-gray-700 dark:text-gray-200"
+              onKeyDown={(e) => e.key === "Enter" && handleGenerator()}
             />
             <button
               onClick={handleGenerator}
@@ -191,12 +199,6 @@ const Page = () => {
 };
 
 export default Page;
-
-
-
-
-
-
 
 
 
