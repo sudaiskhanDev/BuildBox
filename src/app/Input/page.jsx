@@ -76,7 +76,33 @@ const Page = () => {
             {loader && <p className="text-gray-500 flex justify-center items-center m-auto"> <Loader/> </p>}
             {error && <p className="text-red-500">{error}</p>}
             {output && <p className="whitespace-pre-wrap"><ReactMarkdown className="prose prose-sm sm:prose-base max-w-none"
-            >
+            components={{
+                  h1: ({ children }) => (
+                    <h1 className="text-4xl font-bold text-blue-500 mb-4">
+                      {children}
+                    </h1>
+                  ),
+                  h2: ({ children }) => (
+                    <h2 className="text-3xl font-semibold text-cyan-400 mb-3">
+                      {children}
+                    </h2>
+                  ),
+                  h3: ({ children }) => (
+                    <h3 className="text-2xl font-semibold text-blue-300 mb-2">
+                      {children}
+                    </h3>
+                  ),
+                  p: ({ children }) => (
+                    <p className="text-gray-300 leading-relaxed text-base mb-4">
+                      {children}
+                    </p>
+                  ),
+                  li: ({ children }) => (
+                    <li className="text-gray-400 mb-2 ml-4 list-disc">
+                      {children}
+                    </li>
+                  ),
+                }}>
   {output}
 </ReactMarkdown></p>}
           </div>
