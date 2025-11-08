@@ -32,7 +32,7 @@ const Page = () => {
       
          // Send the request to backend using selected tool
          const toolkey = selectedTool.toLowerCase().replace(/\s+/g,"_")
-         const response = await axios.post(`/api/ai?type= ${toolkey}`,
+         const response = await axios.post(`/api/ai?type=${toolkey}`,
           {text: input})
 
           if(response.data && response.data[toolkey]){
