@@ -1,9 +1,9 @@
 "use client";
 import axios from "axios";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import ReactMarkdown from "react-markdown";
 import Loader from "@/components/Main/Loader.jsx";
-import { HiMenu, HiX } from "react-icons/hi"; // Hamburger icons
+import { HiMenu, HiX } from "react-icons/hi";
 
 const Page = () => {
   const [selectedTool, setSelectedTool] = useState("Article");
@@ -12,9 +12,11 @@ const Page = () => {
   const [displayedText, setDisplayedText] = useState(""); // Typing effect
   const [loader, setLoader] = useState(false);
   const [error, setError] = useState("");
-  const [sidebarOpen, setSidebarOpen] = useState(false); // Mobile sidebar toggle
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const navTools = ["Article", "Post", "Blog"];
+
+  const outputRef = useRef(null); // Reference for auto-scroll
 
   // Typing effect
   useEffect(() => {
@@ -25,9 +27,16 @@ const Page = () => {
       setDisplayedText((prev) => prev + output[index]);
       index++;
       if (index >= output.length) clearInterval(interval);
-    }, 1);
+    }, 20);
     return () => clearInterval(interval);
   }, [output]);
+
+  // Auto-scroll whenever displayedText changes
+  useEffect(() => {
+    if (outputRef.current) {
+      outputRef.current.scrollTop = outputRef.current.scrollHeight;
+    }
+  }, [displayedText, loader]);
 
   const handleGenerator = async () => {
     if (!input.trim()) {
@@ -61,9 +70,9 @@ const Page = () => {
 
   return (
     <div className="flex w-full min-h-screen bg-gray-100">
-      {/* Sidebar for desktop */}
+      {/* Desktop Sidebar */}
       <div className="hidden md:flex md:flex-col w-[20%] bg-white shadow-md p-4">
-        <h1 className="text-xl font-semibold mb-4 text-gray-800 flex justify-center items-center">Tools</h1>
+        <h1 className="text-xl font-semibold mb-4 text-gray-800">Tools</h1>
         <div className="flex flex-col gap-2">
           {navTools.map((tool) => (
             <div
@@ -81,11 +90,11 @@ const Page = () => {
         </div>
       </div>
 
-      {/* Mobile Sidebar toggle */}
+      {/* Mobile Sidebar Toggle */}
       <div className="md:hidden fixed top-4 left-4 z-50">
         <button
           onClick={() => setSidebarOpen(!sidebarOpen)}
-          className="text-2xl text-blue-600 "
+          className="text-2xl text-blue-600"
         >
           {sidebarOpen ? <HiX /> : <HiMenu />}
         </button>
@@ -97,7 +106,7 @@ const Page = () => {
           sidebarOpen ? "translate-x-0" : "-translate-x-full"
         } md:hidden`}
       >
-        <h1 className="text-xl font-semibold mb-4 text-gray-800 flex justify-center items-center">Tools</h1>
+        <h1 className="text-xl font-semibold mb-4 text-gray-800">Tools</h1>
         <div className="flex flex-col gap-2">
           {navTools.map((tool) => (
             <div
@@ -118,7 +127,7 @@ const Page = () => {
         </div>
       </div>
 
-      {/* Main content */}
+      {/* Main Content */}
       <div className="flex-1 flex justify-center items-center p-4 md:ml-0 w-full">
         <div className="input-output bg-white w-full sm:w-[90%] md:w-[70%] xl:w-[60%] rounded-xl shadow-md overflow-hidden flex flex-col h-[85vh]">
           {/* Header */}
@@ -127,7 +136,10 @@ const Page = () => {
           </div>
 
           {/* Output Section */}
-          <div className="output flex-1 p-4 overflow-y-auto border-b border-gray-200 text-sm sm:text-base">
+          <div
+            ref={outputRef}
+            className="output flex-1 p-4 overflow-y-auto border-b border-gray-200 text-sm sm:text-base"
+          >
             {loader && (
               <p className="text-gray-500 flex justify-center items-center m-auto">
                 <Loader />
