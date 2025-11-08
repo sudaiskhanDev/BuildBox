@@ -1,117 +1,106 @@
-"use client"
-import axios from 'axios'
-import { div, p } from 'framer-motion/client'
-import { InputTokens } from 'openai/resources/responses.js'
-import React, { useState } from 'react'
+"use client";
+import axios from "axios";
+import React, { useState } from "react";
+import ReactMarkdown from "react-markdown";
 
+import Loader  from "@/components/Main/Loader.jsx"
 const Page = () => {
+  const [selectedTool, setSelectedTool] = useState("Article");
+  const [input, setInput] = useState("");
+  const [output, setOutput] = useState("");
+  const [loader, setLoader] = useState(false);
+  const [error, setError] = useState("");
 
-  const [selectedTool, setSelectedTool] = useState("Article")
-  const [input, setInput] = useState("")
-  const[output, setOutput] = useState("")
-  const[loader , setLoader] = useState(false);
-  const[error, setError] = useState("")
+  const navTools = ["Article", "Post", "Blog"];
 
-
-  const navTools =["Article", "Post", "Blog"]
-
-  //Main Generator Function
-  const handleGenerator= async ()=>{
-
-    if(!input.trim()){
+  const handleGenerator = async () => {
+    if (!input.trim()) {
       setError("Please Enter Something");
-      setOutput("")
+      setOutput("");
       return;
     }
 
-    setError("")
-    setLoader(true)
-    setOutput("")
+    setError("");
+    setLoader(true);
+    setOutput("");
 
     try {
-      
-         // Send the request to backend using selected tool
-         const toolkey = selectedTool.toLowerCase().replace(/\s+/g,"_")
-         const response = await axios.post(`/api/ai?type=${toolkey}`,
-          {text: input})
+      const toolkey = selectedTool.toLowerCase().replace(/\s+/g, "_");
+      const response = await axios.post(`/api/ai?type=${toolkey}`, { text: input });
 
-          if(response.data && response.data[toolkey]){
-              setOutput(response.data[toolkey])
-              
-          }else{
-            setError("Issue with Backend")
-            
-          }
+      if (response.data && response.data[toolkey]) {
+        setOutput(response.data[toolkey]);
+      } else {
+        setError("Issue with Backend");
+      }
     } catch (error) {
-      console.error("Error generating content:", error)
-      setError("Something Error in Request")
-    } finally{
-      setLoader(false)
+      console.error("Error generating content:", error);
+      setError("Something Error in Request");
+    } finally {
+      setLoader(false);
     }
-  }
+  };
 
   return (
-    <>
-   <div className="main w-full h-screen flex bg-gray-100">
-
-  {/* Sidebar */}
-  <div className="side-bar-m w-[15%] h-full bg-white shadow-md p-4 justify-between">
-    <h1 className="text-xl font-semibold mb-4">Tools</h1>
-    <div className="space-y-2  p-1 text-white rounded-md">
-      {navTools.map((tool)=>(
-        <div
-        key={tool}
-        onClick={()=>setSelectedTool(tool)}
-        className={`flex items-center px-4 py-2 cursor-pointer rounded-md bg-gray-400 items-center`}
-        > 
-        {tool}
-
+    <div className="main w-full min-h-screen flex flex-col md:flex-row bg-gray-100">
+      {/* Sidebar */}
+      <div className="side-bar-m w-full md:w-[20%] bg-white shadow-md p-4 flex md:flex-col justify-between md:justify-start">
+        <h1 className="text-xl font-semibold mb-4 text-gray-800">Tools</h1>
+        <div className="space-y-2 md:space-y-3 flex md:flex-col gap-2 md:gap-0">
+          {navTools.map((tool) => (
+            <div
+              key={tool}
+              onClick={() => setSelectedTool(tool)}
+              className={`px-4 py-2 rounded-md cursor-pointer text-center md:text-left ${
+                selectedTool === tool
+                  ? "bg-blue-600 text-white"
+                  : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+              }`}
+            >
+              {tool}
+            </div>
+          ))}
         </div>
-      ) )}
-    </div>
-  </div>
-
-  {/* Main Content */}
-  <div className="main-input-output w-[85%] h-full flex">
-    <div className="input-output bg-white w-[60%] h-[70%] m-auto rounded-xl shadow-md overflow-hidden flex flex-col">
-      
-      {/* Output Section */}
-     <div className="output-container bg-amber-400">
-       <h1>{selectedTool} Generator</h1>
-       </div>
-      <div className="output w-full h-[85%] p-4 border-b border-gray-200 overflow-y-auto">
-        {loader && <p>Loading....</p>}
-        {error && <p className="text-red-500">{error}</p>}
-        {output && <p>{output}</p>}
       </div>
-     
-      
-      {/* Input Section */}
-      <div className="input w-full h-[15%] p-3 flex items-center gap-2 border-t border-gray-200">
-        <input
-          value={input}
-          onChange={(e)=>setInput(e.target.value)}
-          type="text"
-          placeholder="Enter topic..."
-          className="flex-1 border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
-        />
-        <button 
-        onClick={handleGenerator}
-        className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition">
-          Generate
-        </button>
+
+      {/* Main Content */}
+      <div className="main-input-output w-full md:w-[80%] flex justify-center items-center p-4">
+        <div className="input-output bg-white w-full sm:w-[90%] md:w-[70%] xl:w-[60%] rounded-xl shadow-md overflow-hidden flex flex-col h-[85vh]">
+          {/* Header */}
+          <div className="output-container bg-blue-600 text-white text-center py-3">
+            <h1 className="text-lg sm:text-xl font-semibold">{selectedTool} Generator</h1>
+          </div>
+
+          {/* Output Section */}
+          <div className="output flex-1 p-4 overflow-y-auto border-b border-gray-200 text-sm sm:text-base ">
+            {loader && <p className="text-gray-500 flex justify-center items-center m-auto"> <Loader/> </p>}
+            {error && <p className="text-red-500">{error}</p>}
+            {output && <p className="whitespace-pre-wrap"><ReactMarkdown className="prose prose-sm sm:prose-base max-w-none"
+            >
+  {output}
+</ReactMarkdown></p>}
+          </div>
+
+          {/* Input Section */}
+          <div className="input p-3 flex flex-col sm:flex-row gap-3 border-t border-gray-200">
+            <input
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              type="text"
+              placeholder="Enter topic..."
+              className="flex-1 border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            />
+            <button
+              onClick={handleGenerator}
+              className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition w-full sm:w-auto"
+            >
+              Generate
+            </button>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-</div>
+  );
+};
 
-    
-    </>
-  )
-}
-
-export default Page
-
-
-
-
+export default Page;
