@@ -25,7 +25,7 @@ const Page = () => {
       setDisplayedText((prev) => prev + output[index]);
       index++;
       if (index >= output.length) clearInterval(interval);
-    }, 20);
+    }, 1);
     return () => clearInterval(interval);
   }, [output]);
 
