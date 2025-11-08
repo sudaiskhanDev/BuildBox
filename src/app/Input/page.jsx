@@ -3,14 +3,16 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import ReactMarkdown from "react-markdown";
 import Loader from "@/components/Main/Loader.jsx";
+import { HiMenu, HiX } from "react-icons/hi"; // Hamburger icons
 
 const Page = () => {
   const [selectedTool, setSelectedTool] = useState("Article");
   const [input, setInput] = useState("");
   const [output, setOutput] = useState("");
-  const [displayedText, setDisplayedText] = useState(""); // For typing effect
+  const [displayedText, setDisplayedText] = useState(""); // Typing effect
   const [loader, setLoader] = useState(false);
   const [error, setError] = useState("");
+  const [sidebarOpen, setSidebarOpen] = useState(false); // Mobile sidebar toggle
 
   const navTools = ["Article", "Post", "Blog"];
 
@@ -23,7 +25,7 @@ const Page = () => {
       setDisplayedText((prev) => prev + output[index]);
       index++;
       if (index >= output.length) clearInterval(interval);
-    }, 20); // adjust speed here (ms per character)
+    }, 20);
     return () => clearInterval(interval);
   }, [output]);
 
@@ -58,16 +60,16 @@ const Page = () => {
   };
 
   return (
-    <div className="main w-full min-h-screen flex flex-col md:flex-row bg-gray-100">
-      {/* Sidebar */}
-      <div className="side-bar-m w-full md:w-[20%] bg-white shadow-md p-4 flex md:flex-col justify-between md:justify-start">
-        <h1 className="text-xl font-semibold mb-4 text-gray-800">Tools</h1>
-        <div className="space-y-2 md:space-y-3 flex md:flex-col gap-2 md:gap-0">
+    <div className="flex w-full min-h-screen bg-gray-100">
+      {/* Sidebar for desktop */}
+      <div className="hidden md:flex md:flex-col w-[20%] bg-white shadow-md p-4">
+        <h1 className="text-xl font-semibold mb-4 text-gray-800 flex justify-center items-center">Tools</h1>
+        <div className="flex flex-col gap-2">
           {navTools.map((tool) => (
             <div
               key={tool}
               onClick={() => setSelectedTool(tool)}
-              className={`px-4 py-2 rounded-md cursor-pointer text-center md:text-left ${
+              className={`px-4 py-2 rounded-md cursor-pointer text-left ${
                 selectedTool === tool
                   ? "bg-blue-600 text-white"
                   : "bg-gray-200 text-gray-700 hover:bg-gray-300"
@@ -79,8 +81,45 @@ const Page = () => {
         </div>
       </div>
 
-      {/* Main Content */}
-      <div className="main-input-output w-full md:w-[80%] flex justify-center items-center p-4">
+      {/* Mobile Sidebar toggle */}
+      <div className="md:hidden fixed top-4 left-4 z-50">
+        <button
+          onClick={() => setSidebarOpen(!sidebarOpen)}
+          className="text-2xl text-blue-600 "
+        >
+          {sidebarOpen ? <HiX /> : <HiMenu />}
+        </button>
+      </div>
+
+      {/* Mobile Sidebar */}
+      <div
+        className={`fixed top-0 left-0 h-full w-64 bg-white shadow-md p-4 z-40 transform transition-transform duration-300 ${
+          sidebarOpen ? "translate-x-0" : "-translate-x-full"
+        } md:hidden`}
+      >
+        <h1 className="text-xl font-semibold mb-4 text-gray-800 flex justify-center items-center">Tools</h1>
+        <div className="flex flex-col gap-2">
+          {navTools.map((tool) => (
+            <div
+              key={tool}
+              onClick={() => {
+                setSelectedTool(tool);
+                setSidebarOpen(false);
+              }}
+              className={`px-4 py-2 rounded-md cursor-pointer text-left ${
+                selectedTool === tool
+                  ? "bg-blue-600 text-white"
+                  : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+              }`}
+            >
+              {tool}
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Main content */}
+      <div className="flex-1 flex justify-center items-center p-4 md:ml-0 w-full">
         <div className="input-output bg-white w-full sm:w-[90%] md:w-[70%] xl:w-[60%] rounded-xl shadow-md overflow-hidden flex flex-col h-[85vh]">
           {/* Header */}
           <div className="output-container bg-blue-600 text-white text-center py-3">
