@@ -58,7 +58,7 @@ const Page = () => {
       setDisplayedText((prev) => prev + words[index] + " ");
       index++;
       if (index >= words.length) clearInterval(interval);
-    }, 30); // Typing speed (ms per word)
+    }, 1); // Typing speed (ms per word)
     return () => clearInterval(interval);
   }, [output]);
 
