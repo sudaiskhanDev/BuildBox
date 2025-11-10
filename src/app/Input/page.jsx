@@ -16,7 +16,7 @@ const Page = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
 
-  const navTools = ["Article", "Post", "Text Summarizer"];
+  const navTools = ["Article", "Post", "Text-Summarizer"];
   const outputRef = useRef(null);
   const sidebarRef = useRef(null);
 

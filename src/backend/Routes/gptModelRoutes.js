@@ -16,7 +16,7 @@ export async function handleAiRoutes(req) {
 
   
 }
-if(type === "textsummarizer"){
+if(type === "text-summarizer"){
     return await textSummarizer(req);
   }
 
