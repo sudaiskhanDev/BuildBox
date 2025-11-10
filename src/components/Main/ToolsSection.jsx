@@ -8,27 +8,27 @@ const ToolsSection = () => {
     {
       title: "Article Generator",
       desc: "Generate articles instantly on any topic with clear, engaging content.",
-      link: "ArticleGen",
+      link: "Input",
     },
     {
       title: "Social Media Post Generator",
       desc: "Create catchy, platform-specific posts for Twitter, Instagram, LinkedIn, and more instantly.",
-      link: "PostGen",
+      link: "Input",
     },
     {
       title: "Blog Writer",
       desc: "Create SEO-optimized blog posts in seconds using AI-powered content generation.",
-      link: "BlogWriter",
+      link: "Input",
     },
     {
       title: "Ad Copy Generator",
       desc: "Generate high-converting ad copy for Google, Meta, and other platforms.",
-      link: "AdGen",
+      link: "Input",
     },
     {
       title: "Product Description Generator",
       desc: "Write persuasive product descriptions that boost sales and SEO.",
-      link: "ProductGen",
+      link: "Input",
     },
   ];
 

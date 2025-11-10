@@ -10,9 +10,10 @@ export async function handleAiRoutes(req) {
       return await generateArticle(req);
     }
 
-    if(type == "post"){
-      return await generatePost(req);
-    }
+   if(type === "post") {
+  return await generatePost(req);
+}
+
 
     // ❌ Invalid Type
     return new Response(JSON.stringify({ message: "Invalid AI type" }), {
