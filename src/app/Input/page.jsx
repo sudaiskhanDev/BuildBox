@@ -10,6 +10,7 @@ const Page = () => {
   const [selectedTool, setSelectedTool] = useState("Article");
   const [input, setInput] = useState("");
   const [output, setOutput] = useState("");
+  const [displayedText, setDisplayedText] = useState(""); // Typing effect text
   const [loader, setLoader] = useState(false);
   const [error, setError] = useState("");
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -25,7 +26,7 @@ const Page = () => {
     else document.body.classList.remove("dark");
   }, [darkMode]);
 
-  // 🌀 Smooth auto scroll
+  // 🌀 Smooth auto scroll when output changes
   useEffect(() => {
     if (outputRef.current) {
       outputRef.current.scrollTo({
@@ -33,7 +34,7 @@ const Page = () => {
         behavior: "smooth",
       });
     }
-  }, [output]);
+  }, [displayedText]);
 
   // 🧱 Click outside sidebar to close it
   useEffect(() => {
@@ -47,6 +48,21 @@ const Page = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [sidebarOpen]);
 
+  // ✨ Typing effect for generated text
+  useEffect(() => {
+    if (!output) return;
+    setDisplayedText("");
+    let index = 0;
+    const words = output.split(" ");
+    const interval = setInterval(() => {
+      setDisplayedText((prev) => prev + words[index] + " ");
+      index++;
+      if (index >= words.length) clearInterval(interval);
+    }, 30); // Typing speed (ms per word)
+    return () => clearInterval(interval);
+  }, [output]);
+
+  // ⚡ Handle text generation
   const handleGenerator = async () => {
     if (!input.trim()) {
       setError("Please enter something");
@@ -71,8 +87,8 @@ const Page = () => {
 
   return (
     <div className="flex flex-col md:flex-row w-full min-h-screen transition-colors duration-300 bg-gradient-to-br from-gray-100 via-gray-200 to-gray-100 dark:from-gray-900 dark:via-black dark:to-gray-900 text-gray-900 dark:text-white">
-      
-      {/* Sidebar Desktop */}
+
+      {/* Sidebar (Desktop) */}
       <div className="hidden md:flex md:flex-col w-[20%] bg-white/70 dark:bg-gray-900/70 backdrop-blur-md border-r border-gray-200 dark:border-gray-800 p-5 shadow-xl">
         <div className="flex justify-between items-center mb-5">
           <h1 className="text-2xl font-semibold bg-gradient-to-r from-blue-500 to-purple-500 text-transparent bg-clip-text">
@@ -103,7 +119,7 @@ const Page = () => {
         </div>
       </div>
 
-      {/* Mobile Sidebar Toggle */}
+      {/* Mobile Sidebar Toggle Buttons */}
       <div className="md:hidden fixed top-4 left-4 z-50 flex gap-3 items-center">
         <button
           onClick={() => setSidebarOpen(!sidebarOpen)}
@@ -126,7 +142,7 @@ const Page = () => {
           sidebarOpen ? "translate-x-0" : "-translate-x-full"
         } md:hidden border-r border-gray-200 dark:border-gray-800`}
       >
-        <h1 className="text-2xl font-semibold mb-5 bg-gradient-to-r from-blue-500 to-purple-500 text-transparent bg-clip-text">
+        <h1 className="text-2xl mt-16 font-semibold mb-5 bg-gradient-to-r from-blue-500 to-purple-500 text-transparent bg-clip-text">
           Tools
         </h1>
         <div className="flex flex-col gap-3">
@@ -149,7 +165,7 @@ const Page = () => {
         </div>
       </div>
 
-      {/* Main Content */}
+      {/* Main Content Area */}
       <div className="flex-1 flex justify-center items-center p-4">
         <div className="flex flex-col w-full sm:w-[95%] md:w-[70%] xl:w-[60%] h-[85vh] rounded-2xl bg-white/70 dark:bg-gray-900/70 backdrop-blur-md shadow-2xl overflow-hidden border border-gray-200 dark:border-gray-800">
           
@@ -171,19 +187,23 @@ const Page = () => {
               </div>
             )}
             {error && <p className="text-red-500">{error}</p>}
+
             {output && (
-              <ReactMarkdown
-                className="prose prose-sm sm:prose-base max-w-none dark:prose-invert"
-                components={{
-                  h1: ({ children }) => <h1 className="text-4xl font-bold mb-4">{children}</h1>,
-                  h2: ({ children }) => <h2 className="text-3xl font-semibold mb-3">{children}</h2>,
-                  h3: ({ children }) => <h3 className="text-2xl font-semibold mb-2">{children}</h3>,
-                  p: ({ children }) => <p className="leading-relaxed text-base mb-4">{children}</p>,
-                  li: ({ children }) => <li className="mb-2 ml-4 list-disc">{children}</li>,
-                }}
-              >
-                {output}
-              </ReactMarkdown>
+              <div className="relative">
+                <ReactMarkdown
+                  className="prose prose-sm sm:prose-base max-w-none dark:prose-invert"
+                  components={{
+                    h1: ({ children }) => <h1 className="text-4xl font-bold mb-4">{children}</h1>,
+                    h2: ({ children }) => <h2 className="text-3xl font-semibold mb-3">{children}</h2>,
+                    h3: ({ children }) => <h3 className="text-2xl font-semibold mb-2">{children}</h3>,
+                    p: ({ children }) => <p className="leading-relaxed text-base mb-4">{children}</p>,
+                    li: ({ children }) => <li className="mb-2 ml-4 list-disc">{children}</li>,
+                  }}
+                >
+                  {displayedText}
+                </ReactMarkdown>
+                <span className="animate-pulse ml-1 text-blue-500">|</span>
+              </div>
             )}
           </div>
 
@@ -211,7 +231,6 @@ const Page = () => {
 };
 
 export default Page;
-
 
 
 
