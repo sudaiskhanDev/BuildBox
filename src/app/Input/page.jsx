@@ -193,9 +193,9 @@ const Page = () => {
                 <ReactMarkdown
                   className="prose prose-sm sm:prose-base max-w-none dark:prose-invert"
                   components={{
-                    h1: ({ children }) => <h1 className="text-4xl font-bold mb-4">{children}</h1>,
-                    h2: ({ children }) => <h2 className="text-3xl font-semibold mb-3">{children}</h2>,
-                    h3: ({ children }) => <h3 className="text-2xl font-semibold mb-2">{children}</h3>,
+                    h1: ({ children }) => <h1 className="text-4xl font-bold mb-4 text-blue-600">{children}</h1>,
+                    h2: ({ children }) => <h2 className="text-3xl font-semibold mb-3 text-blue-500">{children}</h2>,
+                    h3: ({ children }) => <h3 className="text-2xl font-semibold mb-2 text-blue-400">{children}</h3>,
                     p: ({ children }) => <p className="leading-relaxed text-base mb-4">{children}</p>,
                     li: ({ children }) => <li className="mb-2 ml-4 list-disc">{children}</li>,
                   }}
