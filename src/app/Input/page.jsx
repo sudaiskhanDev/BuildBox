@@ -17,17 +17,35 @@ const Page = () => {
 
   const navTools = ["Article"];
   const outputRef = useRef(null);
+  const sidebarRef = useRef(null);
 
+  // 🌙 Dark mode toggle
   useEffect(() => {
     if (darkMode) document.body.classList.add("dark");
     else document.body.classList.remove("dark");
   }, [darkMode]);
 
+  // 🌀 Smooth auto scroll
   useEffect(() => {
     if (outputRef.current) {
-      outputRef.current.scrollTop = outputRef.current.scrollHeight;
+      outputRef.current.scrollTo({
+        top: outputRef.current.scrollHeight,
+        behavior: "smooth",
+      });
     }
   }, [output]);
+
+  // 🧱 Click outside sidebar to close it
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (sidebarRef.current && !sidebarRef.current.contains(e.target)) {
+        setSidebarOpen(false);
+      }
+    };
+    if (sidebarOpen) document.addEventListener("mousedown", handleClickOutside);
+    else document.removeEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [sidebarOpen]);
 
   const handleGenerator = async () => {
     if (!input.trim()) {
@@ -52,25 +70,31 @@ const Page = () => {
   };
 
   return (
-    <div className="flex flex-col md:flex-row w-full min-h-screen bg-gray-100 dark:bg-black transition-colors duration-300 text-gray-900 dark:text-white">
+    <div className="flex flex-col md:flex-row w-full min-h-screen transition-colors duration-300 bg-gradient-to-br from-gray-100 via-gray-200 to-gray-100 dark:from-gray-900 dark:via-black dark:to-gray-900 text-gray-900 dark:text-white">
       
       {/* Sidebar Desktop */}
-      <div className="hidden md:flex md:flex-col w-[20%] bg-white dark:bg-gray-900 shadow-md p-4">
-        <div className="flex justify-between items-center mb-4">
-          <h1 className="text-xl font-semibold">Tools</h1>
-          <button onClick={() => setDarkMode(!darkMode)} className="text-xl">
+      <div className="hidden md:flex md:flex-col w-[20%] bg-white/70 dark:bg-gray-900/70 backdrop-blur-md border-r border-gray-200 dark:border-gray-800 p-5 shadow-xl">
+        <div className="flex justify-between items-center mb-5">
+          <h1 className="text-2xl font-semibold bg-gradient-to-r from-blue-500 to-purple-500 text-transparent bg-clip-text">
+            Tools
+          </h1>
+          <button
+            onClick={() => setDarkMode(!darkMode)}
+            className="text-xl hover:scale-110 transition-transform"
+          >
             {darkMode ? <HiSun /> : <HiMoon />}
           </button>
         </div>
-        <div className="flex flex-col gap-2">
+
+        <div className="flex flex-col gap-3">
           {navTools.map((tool) => (
             <div
               key={tool}
               onClick={() => setSelectedTool(tool)}
-              className={`px-4 py-2 rounded-md cursor-pointer text-left ${
+              className={`px-4 py-2 rounded-lg cursor-pointer text-left font-medium transition-all ${
                 selectedTool === tool
-                  ? "bg-blue-600 text-white"
-                  : "bg-gray-200 text-gray-900 dark:bg-gray-800 dark:text-white hover:bg-gray-300 dark:hover:bg-gray-700"
+                  ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-md"
+                  : "bg-gray-200/70 dark:bg-gray-800/70 hover:bg-gray-300/70 dark:hover:bg-gray-700/70 text-gray-900 dark:text-white"
               }`}
             >
               {tool}
@@ -80,26 +104,32 @@ const Page = () => {
       </div>
 
       {/* Mobile Sidebar Toggle */}
-      <div className="md:hidden fixed top-4 left-4 z-50 flex gap-2">
+      <div className="md:hidden fixed top-4 left-4 z-50 flex gap-3 items-center">
         <button
           onClick={() => setSidebarOpen(!sidebarOpen)}
-          className="text-2xl text-white flex items-center justify-center"
+          className="text-3xl text-white bg-black/40 p-2 rounded-lg backdrop-blur-md shadow-md"
         >
           {sidebarOpen ? <HiX /> : <HiMenu />}
         </button>
-        <button onClick={() => setDarkMode(!darkMode)} className="text-2xl text-white">
+        <button
+          onClick={() => setDarkMode(!darkMode)}
+          className="text-2xl text-white bg-black/40 p-2 rounded-lg backdrop-blur-md shadow-md"
+        >
           {darkMode ? <HiSun /> : <HiMoon />}
         </button>
       </div>
 
       {/* Mobile Sidebar */}
       <div
-        className={`fixed top-0 left-0 h-full w-64 bg-white dark:bg-gray-900 shadow-md p-4 z-40 transform transition-transform duration-300 ${
+        ref={sidebarRef}
+        className={`fixed top-0 left-0 h-full w-64 bg-white/80 dark:bg-gray-900/90 backdrop-blur-lg shadow-2xl p-5 z-40 transform transition-transform duration-300 ${
           sidebarOpen ? "translate-x-0" : "-translate-x-full"
-        } md:hidden`}
+        } md:hidden border-r border-gray-200 dark:border-gray-800`}
       >
-        <h1 className="text-xl font-semibold mb-4">Tools</h1>
-        <div className="flex flex-col gap-2">
+        <h1 className="text-2xl font-semibold mb-5 bg-gradient-to-r from-blue-500 to-purple-500 text-transparent bg-clip-text">
+          Tools
+        </h1>
+        <div className="flex flex-col gap-3">
           {navTools.map((tool) => (
             <div
               key={tool}
@@ -107,10 +137,10 @@ const Page = () => {
                 setSelectedTool(tool);
                 setSidebarOpen(false);
               }}
-              className={`px-4 py-2 rounded-md cursor-pointer text-left ${
+              className={`px-4 py-2 rounded-lg cursor-pointer text-left font-medium transition-all ${
                 selectedTool === tool
-                  ? "bg-blue-600 text-white"
-                  : "bg-gray-200 text-gray-900 dark:bg-gray-800 dark:text-white hover:bg-gray-300 dark:hover:bg-gray-700"
+                  ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-md"
+                  : "bg-gray-200/70 dark:bg-gray-800/70 hover:bg-gray-300/70 dark:hover:bg-gray-700/70 text-gray-900 dark:text-white"
               }`}
             >
               {tool}
@@ -120,23 +150,25 @@ const Page = () => {
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 flex justify-center items-center p-4 w-full">
-        <div className="flex flex-col w-full sm:w-[95%] md:w-[70%] xl:w-[60%] h-[85vh] bg-white dark:bg-gray-900 rounded-xl shadow-md overflow-hidden transition-colors duration-300">
+      <div className="flex-1 flex justify-center items-center p-4">
+        <div className="flex flex-col w-full sm:w-[95%] md:w-[70%] xl:w-[60%] h-[85vh] rounded-2xl bg-white/70 dark:bg-gray-900/70 backdrop-blur-md shadow-2xl overflow-hidden border border-gray-200 dark:border-gray-800">
           
           {/* Header */}
-          <div className="bg-gray-200 dark:bg-gray-800 text-gray-900 dark:text-white text-center py-3">
-            <h1 className="text-lg sm:text-xl font-semibold">{selectedTool} Generator</h1>
+          <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white text-center py-4 shadow-md">
+            <h1 className="text-lg sm:text-xl font-semibold tracking-wide">
+              {selectedTool} Generator
+            </h1>
           </div>
 
           {/* Output Section */}
           <div
             ref={outputRef}
-            className="flex-1 p-4 overflow-y-auto border-t border-b border-gray-300 dark:border-gray-700 text-sm sm:text-base"
+            className="flex-1 p-4 overflow-y-auto border-y border-gray-300/50 dark:border-gray-700/50 text-sm sm:text-base"
           >
             {loader && (
-              <p className="flex justify-center items-center m-auto">
+              <div className="flex justify-center items-center h-full">
                 <Loader />
-              </p>
+              </div>
             )}
             {error && <p className="text-red-500">{error}</p>}
             {output && (
@@ -156,18 +188,18 @@ const Page = () => {
           </div>
 
           {/* Input Section */}
-          <div className="p-3 flex flex-col sm:flex-row gap-3 border-t border-gray-300 dark:border-gray-700">
+          <div className="p-4 flex flex-col sm:flex-row gap-3 border-t border-gray-300/50 dark:border-gray-700/50 bg-gray-100/40 dark:bg-gray-800/40 backdrop-blur-sm">
             <input
               value={input}
               onChange={(e) => setInput(e.target.value)}
               type="text"
-              placeholder="Enter topic..."
-              className="flex-1 border border-gray-400 dark:border-gray-600 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white"
+              placeholder="Enter your topic..."
+              className="flex-1 border border-gray-400 dark:border-gray-600 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white/70 dark:bg-gray-800/70 text-gray-900 dark:text-white"
               onKeyDown={(e) => e.key === "Enter" && handleGenerator()}
             />
             <button
               onClick={handleGenerator}
-              className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition w-full sm:w-auto"
+              className="px-6 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-lg hover:opacity-90 transition w-full sm:w-auto shadow-md"
             >
               Generate
             </button>
@@ -179,7 +211,6 @@ const Page = () => {
 };
 
 export default Page;
-
 
 
 
