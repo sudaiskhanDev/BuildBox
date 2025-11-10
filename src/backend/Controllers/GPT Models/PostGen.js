@@ -22,7 +22,7 @@ The final output should be ready-to-post, with no spelling or grammatical errors
         {
             role: "user",
             content: `Generate a social media post for the platform and topic specified in the input: "${text}".  
-Make it short, catchy, and engaging, suitable for social media audiences, with natural language and attention-grabbing style.`
+Make it short, catchy, and engaging, and add lots of trending tags with # relavent to  the topic, suitable for social media audiences, with natural language and attention-grabbing style.`
         }
     ]
 });
