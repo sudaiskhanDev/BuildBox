@@ -1,6 +1,6 @@
 import { generateArticle } from "../Controllers/GPT Models/ArticleGen.js";
 import { generatePost  } from "../Controllers/GPT Models/PostGen.js"
-import {textSummarizer}  from "../Controllers/GPT Models/TextSummarizer.js"
+import {generateSummary}  from "../Controllers/GPT Models/TextSummarizer.js"
 
 export async function handleAiRoutes(req) {
   try {
@@ -17,7 +17,7 @@ export async function handleAiRoutes(req) {
   
 } 
 if(type === "textsummary"){
-            return textSummarizer(req);
+            return generateSummary(req);
 
         }
  
