@@ -1,6 +1,6 @@
 import { generateArticle } from "../Controllers/GPT Models/ArticleGen.js";
 import { generatePost  } from "../Controllers/GPT Models/PostGen.js"
-// import textSummarizer  from "../Controllers/GPT Models/TextSummarizer.js"
+import {textSummarizer}  from "../Controllers/GPT Models/TextSummarizer.js"
 
 export async function handleAiRoutes(req) {
   try {
@@ -15,12 +15,12 @@ export async function handleAiRoutes(req) {
   return await generatePost(req);
 
   
-}
-// if(type === "text-summarizer"){
-//     return await textSummarizer(req);
-//   }
+} 
+if(type === "textsummary"){
+    return textSummarizer(req);
+  }
 
-
+ 
     // ❌ Invalid Type
     return new Response(JSON.stringify({ message: "Invalid AI type" }), {
       status: 404,
