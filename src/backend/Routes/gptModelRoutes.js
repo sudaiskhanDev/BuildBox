@@ -1,6 +1,5 @@
 import { generateArticle } from "../Controllers/GPT Models/ArticleGen.js";
 import { generatePost  } from "../Controllers/GPT Models/PostGen.js"
-import {generateSummary}  from "../Controllers/GPT Models/TextSummarizer.js"
 
 export async function handleAiRoutes(req) {
   try {
@@ -16,10 +15,7 @@ export async function handleAiRoutes(req) {
 
   
 } 
-if(type === "textsummary"){
-            return generateSummary(req);
 
-        }
  
     // ❌ Invalid Type
     return new Response(JSON.stringify({ message: "Invalid AI type" }), {
