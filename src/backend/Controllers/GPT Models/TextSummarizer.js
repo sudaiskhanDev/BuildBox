@@ -1,28 +1,27 @@
-import { pipeline  } from "@xenova/transformers";
+import { max, pipeline} from "@xenova/transformers";
 
-let summarizer; 
-export const textSummarizer = async (req)=>{
-
-  try {
-     const { text } = await req.json()
-
-     if(!summarizer){
-      summarizer = await pipeline(
-        "summarization",
-        "Xenova/distilbart-cnn-12-6",
-        )
-     }
-
-     const result = await summarizer(text, {max_lenght:100, min_lenght:60})
-
-     return new Response(JSON.stringify(result),{
-      header:{"Content-Type":"application/json"}
-     } ,{status:200})
+let summarizer;
 
 
-  } catch (error) {
-      console.error("Summarizer Error: ", error);
-      return new Response(JSON.stringify({error:" Failed to Summarize Text "}),
-    {status:500})
-  }
-}
+export const textSummarizer = async(req)=>{
+
+    try {
+        const {text} = await req.json();
+
+        if(!summarizer){
+            summarizer= await pipeline(
+                "summarization",
+                "Xenova/distilbart-cnn-12-6",
+            );
+
+            
+                    
+        }
+        const result = await summarizer(text,{max_length:56,min_length:40})
+            return new Response(JSON.stringify(result),{
+                headers:{ "Content-Type": "application/json"}
+            })
+    } catch (error) {
+        console.error("Summarizer Error:", error); return new Response(JSON.stringify({ error: "Failed to summarize text" }), { status: 500, });
+    }
+}  
