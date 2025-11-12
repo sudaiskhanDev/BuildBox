@@ -26,7 +26,7 @@ const Page = () => {
     else document.body.classList.remove("dark");
   }, [darkMode]);
 
-  // 🌀 Smooth auto scroll when output changes
+  // 🌀 Auto scroll when output changes
   useEffect(() => {
     if (outputRef.current) {
       outputRef.current.scrollTo({
@@ -36,7 +36,7 @@ const Page = () => {
     }
   }, [displayedText]);
 
-  // 🧱 Click outside sidebar to close it
+  // 🧱 Click outside sidebar to close
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (sidebarRef.current && !sidebarRef.current.contains(e.target)) {
@@ -48,7 +48,7 @@ const Page = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [sidebarOpen]);
 
-  // ✨ Typing effect for generated text
+  // ✨ Typing effect
   useEffect(() => {
     if (!output) return;
     setDisplayedText("");
@@ -62,7 +62,7 @@ const Page = () => {
     return () => clearInterval(interval);
   }, [output]);
 
-  // ⚡ Handle text generation + save to history
+  // ⚡ Handle text generation
   const handleGenerator = async () => {
     if (!input.trim()) {
       setError("Please enter something");
@@ -72,6 +72,7 @@ const Page = () => {
     setError("");
     setLoader(true);
     setOutput("");
+
     try {
       const toolKey = selectedTool.toLowerCase().replace(/\s+/g, "_");
       const response = await axios.post(`/api/ai?type=${toolKey}`, { text: input });
@@ -80,22 +81,22 @@ const Page = () => {
         const generatedOutput = response.data[toolKey];
         setOutput(generatedOutput);
 
-        // 🧾 Save history after successful generation
+        // 🆕 Added: Save generation to user history
         try {
           await axios.post("/api/history", {
-            token: localStorage.getItem("token"), // Token from localStorage
-            toolName: selectedTool,
-            input,
-            output: generatedOutput,
+            token: localStorage.getItem("token"), // 🆕 send user token for authentication
+            toolName: selectedTool, // 🆕 tool selected by user
+            input, // 🆕 user input
+            output: generatedOutput, // 🆕 AI generated content
           });
-        } catch (historyError) {
-          console.error("Error saving history:", historyError);
+          console.log("🆕 History saved successfully!");
+        } catch (historyErr) {
+          console.error("🆕 Error saving history:", historyErr);
         }
-
+        // 🆕 End of history save section
       } else {
         setError("Issue with backend");
       }
-
     } catch (err) {
       console.error(err);
       setError("Something went wrong");
@@ -107,7 +108,6 @@ const Page = () => {
   return (
     <>
       <div className="flex flex-col md:flex-row h-screen bg-gray-50 dark:bg-[#0e0e0f] text-gray-900 dark:text-gray-100 transition-colors duration-300">
-
         {/* Sidebar (Desktop) */}
         <div className="hidden md:flex md:flex-col w-[18%] bg-gray-100 dark:bg-[#1b1c1e] border-r border-gray-200 dark:border-gray-800 p-5">
           <div className="flex justify-between items-center mb-6">
@@ -185,8 +185,6 @@ const Page = () => {
 
         {/* Main Chat Area */}
         <div className="flex-1 flex flex-col pt-[60px] md:pt-0 h-[90%] m-auto bg-gray-50 dark:bg-[#0e0e0f]">
-
-          {/* Chat Messages */}
           <div
             ref={outputRef}
             className="flex-1 overflow-y-auto px-4 sm:px-6 py-6 space-y-6 scrollbar-none"
@@ -200,14 +198,12 @@ const Page = () => {
 
             {output && (
               <div className="space-y-6 pb-24">
-                {/* User Message */}
                 <div className="flex justify-end">
                   <div className="max-w-[80%] bg-[#10a37f] text-white px-5 py-3 rounded-2xl rounded-tr-none text-sm sm:text-base shadow-md">
                     {input}
                   </div>
                 </div>
 
-                {/* AI Message */}
                 <div className="flex justify-start">
                   <div className="max-w-[85%] bg-white dark:bg-[#1f1f1f] px-5 py-3 rounded-2xl rounded-tl-none shadow-md text-sm sm:text-base leading-relaxed">
                     <ReactMarkdown
@@ -228,7 +224,7 @@ const Page = () => {
             )}
           </div>
 
-          {/* Fixed Input Bar */}
+          {/* Input Bar */}
           <div className="fixed bottom-0 left-0 w-full md:static border-t border-gray-200 dark:border-gray-800 bg-gray-100 rounded-full dark:bg-[#202123] px-4 py-3 md:p-4 flex items-center gap-3 z-50 shadow-inner mb-10">
             <input
               value={input}
@@ -236,7 +232,7 @@ const Page = () => {
               type="text"
               placeholder="Send a message..."
               className="flex-1 border border-gray-300 dark:border-gray-700 rounded-lg px-4 py-2 focus:outline-none focus:ring-1 focus:ring-gray-400 dark:focus:ring-gray-600 bg-white dark:bg-[#1c1d1f] text-gray-900 dark:text-white text-sm"
-              onKeyDown={(e) => e.key === 'Enter' && handleGenerator()}
+              onKeyDown={(e) => e.key === "Enter" && handleGenerator()}
             />
             <button
               onClick={handleGenerator}
@@ -252,7 +248,6 @@ const Page = () => {
 };
 
 export default Page;
-
 
 
 // "use client";
