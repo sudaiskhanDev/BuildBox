@@ -84,9 +84,7 @@ const NavBar = () => {
               >
                 Sign up
               </button>
-               <div className="profile bg-amber-400 text-black">
-      <a href="UserProfile">Profile</a>
-      </div>
+              
             </>
           ) : (
             <div className="flex items-center gap-2 bg-gray-100 p-2 rounded-full text-black">
